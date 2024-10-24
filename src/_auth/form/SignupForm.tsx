@@ -79,7 +79,6 @@ const SignupForm = () => {
               <Link to="/sign-in" className="ml-1 font-semibold">
                 Log in
               </Link>
-              .
             </p>
           </div>
         </form>
