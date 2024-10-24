@@ -1,19 +1,22 @@
-import { Button } from "@nextui-org/react";
+import { Route, Routes } from "react-router-dom";
+
+import AuthLayout from "./_auth/AuthLayout";
+import SigninForm from "./_auth/form/SigninForm";
+import SignupForm from "./_auth/form/SignupForm";
+import PageNotFound from "./_root/pages/PageNotFound";
 
 const App = () => {
   return (
-    <div className="h-screen flex flex-col gap-4 justify-center items-center">
-      <h1 className="flex justify-center items-center text-6xl">
-        Wellcome to{" "}
-        <em className="ml-2">
-          <strong> Chatversation</strong>
-        </em>
-      </h1>
+    <main className="h-screen flex flex-col gap-4 justify-center items-center">
+      <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="/sign-in" element={<SigninForm />} />
+          <Route path="/sign-up" element={<SignupForm />} />
+        </Route>
 
-      <Button size="lg" color="primary">
-        Get Started
-      </Button>
-    </div>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </main>
   );
 };
 
