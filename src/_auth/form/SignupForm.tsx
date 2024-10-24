@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
-import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const [auhtCredentials, setAuthCredentials] = useState({
@@ -73,15 +73,15 @@ const SignupForm = () => {
             <Button type="submit" color="danger" className="w-full">
               Sign up
             </Button>
-
-            <p className="text-center text-fuchsia-700 mt-1">
-              Already have an account?
-              <Link to="/sign-in" className="ml-1 font-semibold">
-                Log in
-              </Link>
-            </p>
           </div>
         </form>
+
+        <p className="text-center text-fuchsia-700 mt-2">
+          Already have an account?
+          <Link to="/sign-in" className="ml-1 font-semibold">
+            Log in
+          </Link>
+        </p>
       </div>
     </div>
   );

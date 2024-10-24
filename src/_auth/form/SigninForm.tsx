@@ -1,6 +1,8 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
-import React, { useState } from "react";
 
 const SigninForm = () => {
   const [auhtCredentials, setAuthCredentials] = useState({
@@ -29,7 +31,7 @@ const SigninForm = () => {
         <h1 className="w-full text-center text-2xl font-bold pt-5">
           Log in to your account
         </h1>
-        <p className="small-medium text-light-3 md:base-regular">
+        <p className="w-full text-center text-fuchsia-700 mt-2">
           Welcome back to Chatversation! Please enter your details
         </p>
 
@@ -60,6 +62,12 @@ const SigninForm = () => {
             </Button>
           </div>
         </form>
+        <p className="text-center text-fuchsia-700 mt-2">
+          Don't have an account?
+          <Link to="/sign-up" className="ml-1 font-semibold">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
