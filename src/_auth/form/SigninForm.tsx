@@ -1,7 +1,17 @@
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
+import React, { useState } from "react";
 
 const SigninForm = () => {
+  const [auhtCredentials, setAuthCredentials] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="h-screen w-screen flex justify-center items-center">
       <div className="w-[32rem] p-4 rounded-md shadow-lg shadow-pink-300 bg-fuchsia-200">
@@ -23,11 +33,29 @@ const SigninForm = () => {
           Welcome back to Chatversation! Please enter your details
         </p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-4 mt-5">
-            <Input label="Email" type="email" />
-            <Input label="Password" type="password" />
-            <Button color="danger" className="w-full">
+            <Input
+              label="Email"
+              type="email"
+              onChange={(e) =>
+                setAuthCredentials({
+                  ...auhtCredentials,
+                  email: e.target.value,
+                })
+              }
+            />
+            <Input
+              label="Password"
+              type="password"
+              onChange={(e) =>
+                setAuthCredentials({
+                  ...auhtCredentials,
+                  password: e.target.value,
+                })
+              }
+            />
+            <Button type="submit" color="danger" className="w-full">
               Sign in
             </Button>
           </div>
