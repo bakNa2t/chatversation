@@ -1,6 +1,6 @@
 import { Models } from "appwrite";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 type States = {
   userSession: Models.Session | object;
@@ -11,11 +11,16 @@ type Actions = {
 };
 
 export const useStore = create<States & Actions>()(
-  devtools((set) => ({
-    userSession: {},
-    updateUserSession: (session: Models.Session) =>
-      set(() => ({
-        userSession: session,
-      })),
-  }))
+  devtools(
+    persist(
+      (set) => ({
+        userSession: {},
+        updateUserSession: (session: Models.Session) =>
+          set(() => ({
+            userSession: session,
+          })),
+      }),
+      { name: "chatversation_user_store" }
+    )
+  )
 );
