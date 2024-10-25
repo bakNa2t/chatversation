@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AppwriteException, ID } from "appwrite";
 
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
+
+import { account } from "../../lib/appwrite/config";
 
 const SignupForm = () => {
   const [auhtCredentials, setAuthCredentials] = useState({
@@ -10,9 +13,28 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsLoading(true);
+
+    const promis = account.create(
+      ID.unique(),
+      auhtCredentials.name,
+      auhtCredentials.email,
+      auhtCredentials.password
+    );
+    promis
+      .then((res) => {
+        console.log("The response was: ", res);
+        setIsLoading(false);
+      })
+      .catch((error: AppwriteException) => {
+        console.log("The exception was: ", error.message);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -71,7 +93,7 @@ const SignupForm = () => {
               }
             />
             <Button type="submit" color="danger" className="w-full">
-              Sign up
+              {isLoading ? "Loading..." : "Sign up"}
             </Button>
           </div>
         </form>
