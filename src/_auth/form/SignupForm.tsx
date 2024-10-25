@@ -6,6 +6,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
+import { toast } from "react-toastify";
 
 const SignupForm = () => {
   const [auhtCredentials, setAuthCredentials] = useState({
@@ -20,6 +21,8 @@ const SignupForm = () => {
 
     setIsLoading(true);
 
+    console.log(auhtCredentials);
+
     const promis = account.create(
       ID.unique(),
       auhtCredentials.name,
@@ -32,8 +35,8 @@ const SignupForm = () => {
         setIsLoading(false);
       })
       .catch((error: AppwriteException) => {
-        console.log("The exception was: ", error.message);
         setIsLoading(false);
+        toast.error(error.message, { theme: "colored" });
       });
   };
 
