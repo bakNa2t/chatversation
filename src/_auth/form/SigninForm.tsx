@@ -1,17 +1,44 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AppwriteException } from "appwrite";
 
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 
+import { account } from "../../lib/appwrite/config";
+import { useStore } from "../../lib/zustand/useStore";
+
 const SigninForm = () => {
+  const navigate = useNavigate();
   const [auhtCredentials, setAuthCredentials] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const userSessionState = useStore();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsLoading(true);
+    const promise = account.createEmailPasswordSession(
+      auhtCredentials.email,
+      auhtCredentials.password
+    );
+
+    promise
+      .then((res) => {
+        setIsLoading(false);
+
+        userSessionState.updateUserSession(res);
+        toast.success("Sign in successful", { theme: "colored" });
+        navigate("/");
+      })
+      .catch((error: AppwriteException) => {
+        setIsLoading(false);
+        toast.error(error.message, { theme: "colored" });
+      });
   };
 
   return (
@@ -57,8 +84,13 @@ const SigninForm = () => {
                 })
               }
             />
-            <Button type="submit" color="danger" className="w-full">
-              Sign in
+            <Button
+              type="submit"
+              color="danger"
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
         </form>

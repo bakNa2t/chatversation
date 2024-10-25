@@ -22,13 +22,11 @@ const SignupForm = () => {
 
     setIsLoading(true);
 
-    console.log(auhtCredentials);
-
     const promis = account.create(
       ID.unique(),
-      auhtCredentials.name,
       auhtCredentials.email,
-      auhtCredentials.password
+      auhtCredentials.password,
+      auhtCredentials.name
     );
     promis
       .then((res) => {
@@ -78,6 +76,7 @@ const SignupForm = () => {
                   name: e.target.value,
                 })
               }
+              isRequired
             />
 
             <Input
@@ -89,6 +88,7 @@ const SignupForm = () => {
                   email: e.target.value,
                 })
               }
+              isRequired
             />
 
             <Input
@@ -100,6 +100,7 @@ const SignupForm = () => {
                   password: e.target.value,
                 })
               }
+              isRequired
             />
             <Button
               type="submit"
