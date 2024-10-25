@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AppwriteException, ID } from "appwrite";
 
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
-import { toast } from "react-toastify";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [auhtCredentials, setAuthCredentials] = useState({
     name: "",
     email: "",
@@ -33,6 +34,11 @@ const SignupForm = () => {
       .then((res) => {
         console.log("The response was: ", res);
         setIsLoading(false);
+
+        navigate("/sign-in");
+        toast.success("Account created successfully, please sign in", {
+          theme: "colored",
+        });
       })
       .catch((error: AppwriteException) => {
         setIsLoading(false);
@@ -95,7 +101,12 @@ const SignupForm = () => {
                 })
               }
             />
-            <Button type="submit" color="danger" className="w-full">
+            <Button
+              type="submit"
+              color="danger"
+              className="w-full"
+              disabled={isLoading}
+            >
               {isLoading ? "Loading..." : "Sign up"}
             </Button>
           </div>
