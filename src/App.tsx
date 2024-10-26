@@ -4,14 +4,20 @@ import AuthLayout from "./_auth/AuthLayout";
 import SigninForm from "./_auth/form/SigninForm";
 import SignupForm from "./_auth/form/SignupForm";
 import PageNotFound from "./_root/pages/PageNotFound";
+import RootLayout from "./_root/RootLayout";
+import Home from "./_root/pages/Home";
 
 const App = () => {
   return (
-    <main className="h-screen flex flex-col gap-4 justify-center items-center">
+    <main className="h-screen flex">
       <Routes>
         <Route path="/" element={<AuthLayout />}>
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
+        </Route>
+
+        <Route element={<RootLayout />}>
+          <Route index element={<Home />} />
         </Route>
 
         <Route path="*" element={<PageNotFound />} />
