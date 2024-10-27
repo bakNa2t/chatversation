@@ -6,8 +6,14 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { Models } from "appwrite";
+import { useStore } from "../lib/zustand/useStore";
 
 const Navmenu = () => {
+  const user = useStore(
+    (state) => state.user as Models.User<Models.Preferences>
+  );
+
   return (
     <Navbar>
       <NavbarBrand>
@@ -20,7 +26,7 @@ const Navmenu = () => {
       </NavbarBrand>
 
       <NavbarContent justify="end">
-        <NavbarItem>User</NavbarItem>
+        <NavbarItem>{user.name}</NavbarItem>
 
         <NavbarItem>
           <Button as={Link} color="danger" href="#" variant="flat">
