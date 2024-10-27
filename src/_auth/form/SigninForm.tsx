@@ -7,7 +7,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
-import { useStore } from "../../lib/zustand/useStore";
+import { userStore } from "../../lib/zustand/userStore";
 
 const SigninForm = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const SigninForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const userSessionState = useStore();
+  const userSessionState = userStore();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

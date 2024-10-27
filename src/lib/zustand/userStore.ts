@@ -13,7 +13,7 @@ type Actions = {
   resetState: () => void;
 };
 
-export const useStore = create<States & Actions>()(
+export const userStore = create<States & Actions>()(
   devtools(
     persist(
       (set) => ({

@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
-import { useStore } from "../../lib/zustand/useStore";
+import { userStore } from "../../lib/zustand/userStore";
 
 const Home = () => {
   const navigate = useNavigate();
   const isRendered = useRef<boolean>(false);
-  const userSessionState = useStore();
+  const userSessionState = userStore();
 
   useEffect(() => {
     if (!isRendered.current) {
@@ -32,7 +32,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-col gap-5 justify-center items-center ">
+    <div className="flex flex-col gap-5 justify-center items-center ">
       Home
       <Button size="md" color="success">
         Click

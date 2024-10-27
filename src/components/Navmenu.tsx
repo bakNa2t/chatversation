@@ -7,10 +7,10 @@ import {
   Button,
 } from "@nextui-org/react";
 import { Models } from "appwrite";
-import { useStore } from "../lib/zustand/useStore";
+import { userStore } from "../lib/zustand/userStore";
 
 const Navmenu = () => {
-  const user = useStore(
+  const user = userStore(
     (state) => state.user as Models.User<Models.Preferences>
   );
 
