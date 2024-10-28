@@ -19,7 +19,7 @@ import { chatStore } from "../lib/zustand/chatStore";
 const ModalCreateChat = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const chatState = chatStore();
 
   const handleCreateChat = () => {
@@ -36,6 +36,7 @@ const ModalCreateChat = () => {
       .then((res) => {
         chatState.addChat(res);
         setIsLoading(false);
+        onClose();
         toast.success("Chat group created successfully", { theme: "colored" });
       })
       .catch((error: AppwriteException) => {
