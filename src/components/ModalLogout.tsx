@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AppwriteException, Models } from "appwrite";
+import { toast } from "react-toastify";
 import {
   Modal,
   ModalContent,
@@ -8,8 +12,30 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
+import { account } from "../lib/appwrite/config";
+import { userStore } from "../lib/zustand/userStore";
+
 const ModalLogout = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const session = userStore((state) => state.userSession) as Models.Session;
+
+  const handleLogout = () => {
+    setIsLoading(true);
+
+    account
+      .deleteSession(session?.$id)
+      .then(() => {
+        setIsLoading(false);
+        navigate("/sign-in");
+        toast.success("Logout successful", { theme: "colored" });
+      })
+      .catch((error: AppwriteException) => {
+        setIsLoading(false);
+        toast.error(error.message, { theme: "colored" });
+      });
+  };
 
   return (
     <>
@@ -20,35 +46,23 @@ const ModalLogout = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-2xl font-bold">
                 Logout Confirmation
               </ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+                <h1 className="text-xl font-semibold">Are you sure?</h1>
+                <p>You will be logged out. Please confirm.</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
                 <Button color="primary" onPress={onClose}>
-                  Action
+                  Cancel
+                </Button>
+                <Button
+                  color="danger"
+                  onPress={handleLogout}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Logouting..." : "Confirm"}
                 </Button>
               </ModalFooter>
             </>
