@@ -3,11 +3,10 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
-  Button,
 } from "@nextui-org/react";
 import { Models } from "appwrite";
 import { userStore } from "../lib/zustand/userStore";
+import ModalLogout from "./ModalLogout";
 
 const Navmenu = () => {
   const user = userStore(
@@ -29,9 +28,7 @@ const Navmenu = () => {
         <NavbarItem>{user.name}</NavbarItem>
 
         <NavbarItem>
-          <Button as={Link} color="danger" href="#" variant="flat">
-            Logout
-          </Button>
+          <ModalLogout />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
