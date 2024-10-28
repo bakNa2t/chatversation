@@ -14,13 +14,13 @@ import {
 } from "@nextui-org/react";
 
 import { appwriteConfig, databases } from "../lib/appwrite/config";
-import { chatStore } from "../lib/zustand/chatStore";
+import { communityStore } from "../lib/zustand/communityStore";
 
 const ModalCreateChat = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const chatState = chatStore();
+  const communityState = communityStore();
 
   const handleCreateChat = () => {
     setIsLoading(true);
@@ -34,7 +34,7 @@ const ModalCreateChat = () => {
         }
       )
       .then((res) => {
-        chatState.addChat(res);
+        communityState.addCommunity(res);
         setIsLoading(false);
         onClose();
         toast.success("Chat group created successfully", { theme: "colored" });
