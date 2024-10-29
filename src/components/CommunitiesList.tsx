@@ -45,22 +45,35 @@ const CommunitiesList = () => {
     );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-      {communityState.communities.length > 0 &&
-        communityState.communities.map((community) => (
-          <Card key={community.$id}>
-            <CardBody>
-              <h1 className="text-xl font-bold">{community["name"]}</h1>
-              <p className="p-2">All you want to know about developers</p>
-              <Link to={"/"}>
-                <Button className="w-full sm:max-w-max" color="danger">
-                  Join
-                </Button>
-              </Link>
-            </CardBody>
-          </Card>
-        ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        {communityState.communities.length > 0 &&
+          communityState.communities.map((community) => (
+            <Card key={community.$id}>
+              <CardBody>
+                <h1 className="text-xl font-bold">{community["name"]}</h1>
+                <p className="p-2">All you want to know about developers</p>
+                <Link to={`/chats/${community.$id}`}>
+                  <Button className="w-full sm:max-w-max" color="danger">
+                    Join
+                  </Button>
+                </Link>
+              </CardBody>
+            </Card>
+          ))}
+      </div>
+
+      {communityState.communities.length === 0 && isLoading === false && (
+        <div className="flex justify-center">
+          <h1 className="text-2xl font-bold text-danger-400">
+            No communities found
+          </h1>
+          <p className="text-sm text-violet-500/80">
+            Create a new community for your chat
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 
