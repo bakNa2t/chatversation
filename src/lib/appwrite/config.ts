@@ -6,6 +6,7 @@ export const appwriteConfig = {
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID,
   communitiesCollectionId: import.meta.env
     .VITE_APPWRITE_COMMUNITY_COLLECTION_ID,
+  chatboxesCollectionId: import.meta.env.VITE_APPWRITE_CHATBOX_COLLECTION_ID,
 };
 
 export const client = new Client();
