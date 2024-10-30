@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 
-import { Input } from "@nextui-org/react";
+import { Input, Spinner } from "@nextui-org/react";
 
 import { userStore } from "../../lib/zustand/userStore";
 import { appwriteConfig, databases } from "../../lib/appwrite/config";
@@ -13,11 +13,21 @@ const Chatbox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState("");
   const { id } = useParams();
+  const isFetched = useRef(false);
+
   const user = userStore(
     (state) => state.user
   ) as Models.User<Models.Preferences>;
 
   const chatState = chatStore();
+
+  useEffect(() => {
+    if (!isFetched.current) {
+      handleFetchMessage();
+
+      isFetched.current = true;
+    }
+  }, []);
 
   const handleMessageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,33 +72,34 @@ const Chatbox = () => {
       });
   };
 
+  if (isLoading)
+    return (
+      <div className="flex justify-center">
+        <Spinner color="secondary" />
+      </div>
+    );
+
   return (
     <div className="flex flex-col">
       <div className="flex-1 p-4 mb-20">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((row) =>
-          row % 2 === 0 ? (
-            <div className="flex justify-end mb-2" key={row}>
-              <div className="bg-fuchsia-300 p-2 max-w-72 rounded-lg">
-                <h1 className="font-bold text-xl">User name</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Vitae perferendis quibusdam accusamus voluptas quisquam
-                  repellendus nostrum cumque necessitatibus totam blanditiis?
-                </p>
+        {chatState.chats.length > 0 &&
+          chatState.chats.map((chat) =>
+            chat.user_id === user.$id ? (
+              <div className="flex justify-end mb-2" key={chat.$id}>
+                <div className="bg-fuchsia-300 p-2 max-w-72 rounded-lg">
+                  <h1 className="font-bold text-xl">{chat.name}</h1>
+                  <p>{chat.message}</p>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="flex justify-start mb-2" key={row}>
-              <div className="bg-violet-300 p-2 max-w-72 rounded-lg">
-                <h1 className="font-bold text-xl">User name</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-                  tenetur, sunt asperiores necessitatibus libero voluptas.
-                </p>
+            ) : (
+              <div className="flex justify-start mb-2" key={chat.$id}>
+                <div className="bg-violet-300 p-2 max-w-72 rounded-lg">
+                  <h1 className="font-bold text-xl">{chat.name}</h1>
+                  <p>{chat.message}</p>
+                </div>
               </div>
-            </div>
-          )
-        )}
+            )
+          )}
       </div>
 
       {/* Input message block */}
