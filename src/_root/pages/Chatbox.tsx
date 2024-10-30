@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { Input, Spinner } from "@nextui-org/react";
 
 import { userStore } from "../../lib/zustand/userStore";
-import { appwriteConfig, databases } from "../../lib/appwrite/config";
+import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
 import { chatStore } from "../../lib/zustand/chatStore";
 
 const Chatbox = () => {
@@ -24,6 +24,26 @@ const Chatbox = () => {
   useEffect(() => {
     if (!isFetched.current) {
       handleFetchMessage();
+
+      // synchronize in realtime
+      client.subscribe(
+        `databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.chatboxesCollectionId}.documents`,
+        (response) => {
+          console.log("Response is ", response);
+          const payload = response.payload as Models.Document;
+
+          // verify db for new message
+          if (
+            response.events.includes(
+              "databases.*.collections.*.documents.*.create"
+            )
+          ) {
+            if (user.$id !== payload.user_id) {
+              chatState.addChat(payload);
+            }
+          }
+        }
+      );
 
       isFetched.current = true;
     }
