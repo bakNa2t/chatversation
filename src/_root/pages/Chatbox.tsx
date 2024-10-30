@@ -109,6 +109,13 @@ const Chatbox = () => {
                 <div className="bg-fuchsia-300 p-2 max-w-72 rounded-lg">
                   <h1 className="font-bold text-xl">{chat.name}</h1>
                   <p>{chat.message}</p>
+                  <div className="flex justify-end mt-2">
+                    <img
+                      src="/assets/icons/trash.svg"
+                      alt="trash"
+                      className="cursor-pointer text-red-500"
+                    />
+                  </div>
                 </div>
               </div>
             ) : (

@@ -13,4 +13,7 @@ export default {
   },
   darkMode: "class",
   plugins: [nextui()],
+  exports: {
+    important: true,
+  },
 };
