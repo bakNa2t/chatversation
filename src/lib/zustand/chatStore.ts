@@ -9,6 +9,7 @@ type States = {
 type Actions = {
   addChat: (data: Models.Document) => void;
   addChats: (data: Array<Models.Document>) => void;
+  deleteChat: (id: string) => void;
 };
 
 export const chatStore = create<States & Actions>()(
@@ -23,6 +24,11 @@ export const chatStore = create<States & Actions>()(
     addChats: (data: Array<Models.Document>) =>
       set(() => ({
         chats: data,
+      })),
+
+    deleteChat: (id: string) =>
+      set((state) => ({
+        chats: state.chats.filter((item) => item.$id !== id),
       })),
   }))
 );
