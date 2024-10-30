@@ -10,6 +10,7 @@ import { appwriteConfig, databases } from "../../lib/appwrite/config";
 import { chatStore } from "../../lib/zustand/chatStore";
 
 const Chatbox = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState("");
   const { id } = useParams();
   const user = userStore(
@@ -35,9 +36,29 @@ const Chatbox = () => {
       )
       .then((res) => {
         chatState.addChat(res);
+        setMessage("");
       })
       .catch((error: AppwriteException) => {
         toast(error.message, { theme: "colored" });
+      });
+  };
+
+  const handleFetchMessage = () => {
+    setIsLoading(true);
+
+    databases
+      .listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatboxesCollectionId
+      )
+      .then((res) => {
+        setIsLoading(false);
+
+        chatState.addChats(res.documents);
+      })
+      .catch((error: AppwriteException) => {
+        setIsLoading(false);
+        toast.error(error.message, { theme: "colored" });
       });
   };
 
@@ -76,7 +97,8 @@ const Chatbox = () => {
           <div className="flex items-center space-x-2">
             <Input
               type="text"
-              label="Type your message..."
+              label="Type message..."
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
           </div>
