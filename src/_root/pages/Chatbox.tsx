@@ -92,6 +92,21 @@ const Chatbox = () => {
       });
   };
 
+  const handleDeleteMessage = (id: string) => {
+    databases
+      .deleteDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatboxesCollectionId,
+        id
+      )
+      .then(() => {
+        chatState.deleteChat(id);
+      })
+      .catch((error: AppwriteException) => {
+        toast.error(error.message, { theme: "colored" });
+      });
+  };
+
   if (isLoading)
     return (
       <div className="flex justify-center">
@@ -114,6 +129,7 @@ const Chatbox = () => {
                       src="/assets/icons/trash.svg"
                       alt="trash"
                       className="cursor-pointer text-red-500"
+                      onClick={() => handleDeleteMessage(chat.$id)}
                     />
                   </div>
                 </div>
