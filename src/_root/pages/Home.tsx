@@ -2,7 +2,8 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Button } from "@nextui-org/react";
+import CommunitiesList from "../../components/CommunitiesList";
+import ModalCreateCommunity from "../../components/ModalCreateCommunity";
 
 import { account } from "../../lib/appwrite/config";
 import { userStore } from "../../lib/zustand/userStore";
@@ -32,12 +33,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-5 justify-center items-center ">
-      Home
-      <Button size="md" color="success">
-        Click
-      </Button>
-    </div>
+    <>
+      <div className="flex justify-end">
+        <ModalCreateCommunity />
+      </div>
+      <CommunitiesList />
+    </>
   );
 };
 
