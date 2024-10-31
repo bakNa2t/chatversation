@@ -17,12 +17,19 @@ const ModalDeleteMessage = ({
 
   return (
     <>
-      <img
-        src="/assets/icons/trash.svg"
-        alt="trash"
-        className="cursor-pointer"
-        onClick={onOpen}
-      />
+      <Button
+        isIconOnly
+        variant="light"
+        radius="full"
+        className="w-5 h-5 min-w-0"
+      >
+        <img
+          src="/assets/icons/trash.svg"
+          alt="trash"
+          className="cursor-pointer"
+          onClick={onOpen}
+        />
+      </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
