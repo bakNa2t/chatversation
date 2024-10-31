@@ -4,6 +4,7 @@ import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 
 import { Input, Spinner } from "@nextui-org/react";
+import ModalDeleteMessage from "../../components/ModalDeleteMessage";
 
 import { userStore } from "../../lib/zustand/userStore";
 import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
@@ -41,6 +42,12 @@ const Chatbox = () => {
             if (user.$id !== payload.user_id) {
               chatState.addChat(payload);
             }
+          } else if (
+            response.events.includes(
+              "databases.*.collections.*.documents.*.delete"
+            )
+          ) {
+            chatState.deleteChat(payload.$id);
           }
         }
       );
@@ -120,16 +127,13 @@ const Chatbox = () => {
         {chatState.chats.length > 0 &&
           chatState.chats.map((chat) =>
             chat.user_id === user.$id ? (
-              <div className="flex justify-end mb-2" key={chat.$id}>
+              <div className="flex justify-end mb-4" key={chat.$id}>
                 <div className="bg-fuchsia-300 p-2 max-w-72 rounded-lg">
                   <h1 className="font-bold text-xl">{chat.name}</h1>
                   <p>{chat.message}</p>
                   <div className="flex justify-end mt-2">
-                    <img
-                      src="/assets/icons/trash.svg"
-                      alt="trash"
-                      className="cursor-pointer text-red-500"
-                      onClick={() => handleDeleteMessage(chat.$id)}
+                    <ModalDeleteMessage
+                      handleDeleteMessage={() => handleDeleteMessage(chat.$id)}
                     />
                   </div>
                 </div>
@@ -146,7 +150,10 @@ const Chatbox = () => {
       </div>
 
       {/* Input message block */}
-      <div className="fixed p-4 bottom-0 left-0 right-0 bg-fuchsia-200">
+      <div
+        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-filter backdrop-blur-md bg-opacity-60"
+        style={{ position: "fixed" }}
+      >
         <form onSubmit={handleMessageSubmit}>
           <div className="flex items-center space-x-2">
             <Input
