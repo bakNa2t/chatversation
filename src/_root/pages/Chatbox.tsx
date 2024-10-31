@@ -7,8 +7,8 @@ import { Button, Input, Spinner } from "@nextui-org/react";
 import ModalDeleteMessage from "../../components/ModalDeleteMessage";
 
 import { userStore } from "../../lib/zustand/userStore";
-import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
 import { chatStore } from "../../lib/zustand/chatStore";
+import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
 
 const Chatbox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -160,23 +160,24 @@ const Chatbox = () => {
               type="text"
               label="Type message..."
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className=""
+              onChange={(e) => setMessage(e.target.value.trim())}
             />
 
-            <Button
-              type="submit"
-              variant="light"
-              isIconOnly
-              radius="full"
-              className="absolute right-1 top-1/2 -translate-y-1/2"
-            >
-              <img
-                src="/assets/icons/send.svg"
-                alt="send"
-                className="cursor-pointer"
-              />
-            </Button>
+            {message && (
+              <Button
+                type="submit"
+                variant="light"
+                isIconOnly
+                radius="full"
+                className="absolute right-1 top-1/2 -translate-y-1/2"
+              >
+                <img
+                  src="/assets/icons/send.svg"
+                  alt="send"
+                  className="cursor-pointer"
+                />
+              </Button>
+            )}
           </div>
         </form>
       </div>
