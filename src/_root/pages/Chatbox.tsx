@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 
-import { Input, Spinner } from "@nextui-org/react";
+import { Button, Input, Spinner } from "@nextui-org/react";
 import ModalDeleteMessage from "../../components/ModalDeleteMessage";
 
 import { userStore } from "../../lib/zustand/userStore";
@@ -151,11 +151,11 @@ const Chatbox = () => {
 
       {/* Input message block */}
       <div
-        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-blur-md bg-opacity-40 w-[calc(100vw-20px)]"
+        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-blur-md bg-opacity-40 sm:w-[calc(100vw-20px)]"
         style={{ position: "fixed" }}
       >
         <form onSubmit={handleMessageSubmit}>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 relative">
             <Input
               type="text"
               label="Type message..."
@@ -163,6 +163,20 @@ const Chatbox = () => {
               onChange={(e) => setMessage(e.target.value)}
               className=""
             />
+
+            <Button
+              type="submit"
+              variant="light"
+              isIconOnly
+              radius="full"
+              className="absolute right-1 top-1/2 -translate-y-1/2"
+            >
+              <img
+                src="/assets/icons/send.svg"
+                alt="send"
+                className="cursor-pointer"
+              />
+            </Button>
           </div>
         </form>
       </div>
