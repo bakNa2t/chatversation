@@ -151,7 +151,7 @@ const Chatbox = () => {
 
       {/* Input message block */}
       <div
-        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-filter backdrop-blur-md bg-opacity-60"
+        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-blur-md bg-opacity-40 w-[calc(100vw-20px)]"
         style={{ position: "fixed" }}
       >
         <form onSubmit={handleMessageSubmit}>
@@ -161,6 +161,7 @@ const Chatbox = () => {
               label="Type message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              className=""
             />
           </div>
         </form>
