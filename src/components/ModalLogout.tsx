@@ -42,7 +42,7 @@ const ModalLogout = () => {
       <Button onPress={onOpen} color="danger" variant="flat">
         Logout
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
         <ModalContent>
           {(onClose) => (
             <>
