@@ -9,6 +9,7 @@ type States = {
 type Actions = {
   addCommunity: (data: Models.Document) => void;
   addCommunities: (data: Array<Models.Document>) => void;
+  deleteCommunity: (id: string) => void;
 };
 
 export const communityStore = create<States & Actions>()(
@@ -25,7 +26,7 @@ export const communityStore = create<States & Actions>()(
         communities: data,
       })),
 
-    deleteChat: (id: string) => {
+    deleteCommunity: (id: string) => {
       set((state) => ({
         communities: state.communities.filter((item) => item.$id !== id),
       }));

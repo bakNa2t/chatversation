@@ -23,7 +23,7 @@ const CommunitiesList = () => {
         .listDocuments(
           appwriteConfig.databaseId,
           appwriteConfig.communitiesCollectionId,
-          [Query.select(["$id", "name"])]
+          [Query.select(["$id", "name", "desc"])]
         )
         .then((res) => {
           setIsLoading(false);
@@ -37,6 +37,21 @@ const CommunitiesList = () => {
       isFetched.current = true;
     }
   }, []);
+
+  const handleDeleteCommunity = (id: string) => {
+    databases
+      .deleteDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.communitiesCollectionId,
+        id
+      )
+      .then(() => {
+        communityState.deleteCommunity(id);
+      })
+      .catch((error: AppwriteException) => {
+        toast.error(error.message, { theme: "colored" });
+      });
+  };
 
   if (isLoading)
     return (
@@ -66,7 +81,7 @@ const CommunitiesList = () => {
 
                   <ModalDeleteElement
                     handleDeleteElement={() =>
-                      console.log("Community is deleted")
+                      handleDeleteCommunity(community.$id)
                     }
                     nameElement="community"
                     btnStyles="w-10 h-10 min-w-0"
