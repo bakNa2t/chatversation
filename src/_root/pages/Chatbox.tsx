@@ -4,7 +4,7 @@ import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 
 import { Button, Input, Spinner } from "@nextui-org/react";
-import ModalDeleteMessage from "../../components/ModalDeleteMessage";
+import ModalDeleteElement from "../../components/ModalDeleteElement";
 
 import { userStore } from "../../lib/zustand/userStore";
 import { chatStore } from "../../lib/zustand/chatStore";
@@ -135,8 +135,10 @@ const Chatbox = () => {
                   </div>
 
                   <div className="flex justify-end mt-2">
-                    <ModalDeleteMessage
-                      handleDeleteMessage={() => handleDeleteMessage(chat.$id)}
+                    <ModalDeleteElement
+                      handleDeleteElement={() => handleDeleteMessage(chat.$id)}
+                      nameElement="message"
+                      btnStyles="w-5 h-5 min-w-0"
                     />
                   </div>
                 </div>
