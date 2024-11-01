@@ -5,6 +5,7 @@ import { AppwriteException, Query } from "appwrite";
 import { toast } from "react-toastify";
 
 import { Button, Card, CardBody, Spinner } from "@nextui-org/react";
+import ModalDeleteElement from "./ModalDeleteElement";
 
 import { communityStore } from "../lib/zustand/communityStore";
 
@@ -53,11 +54,24 @@ const CommunitiesList = () => {
               <CardBody>
                 <h1 className="text-xl font-bold">{community["name"]}</h1>
                 <p className="p-2">All you want to know about developers</p>
-                <Link to={`/chats/${community.$id}`}>
-                  <Button className="w-full sm:max-w-max" color="danger">
-                    Join
-                  </Button>
-                </Link>
+                <div className="flex justify-between items-center">
+                  <Link to={`/chats/${community.$id}`}>
+                    <Button
+                      className="w-full sm:w-fit sm:max-w-max"
+                      color="danger"
+                    >
+                      Join
+                    </Button>
+                  </Link>
+
+                  <ModalDeleteElement
+                    handleDeleteElement={() =>
+                      console.log("Community is deleted")
+                    }
+                    nameElement="community"
+                    btnStyles="w-10 h-10 min-w-0"
+                  />
+                </div>
               </CardBody>
             </Card>
           ))}
