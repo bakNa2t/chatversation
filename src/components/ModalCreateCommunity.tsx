@@ -19,6 +19,7 @@ import { communityStore } from "../lib/zustand/communityStore";
 const ModalCreateChat = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const communityState = communityStore();
 
@@ -31,6 +32,7 @@ const ModalCreateChat = () => {
         ID.unique(),
         {
           name: name,
+          desc: desc,
         }
       )
       .then((res) => {
@@ -62,6 +64,11 @@ const ModalCreateChat = () => {
                   label="Name"
                   type="text"
                   onChange={(e) => setName(e.target.value)}
+                />
+                <Input
+                  label="Description"
+                  type="text"
+                  onChange={(e) => setDesc(e.target.value)}
                 />
               </ModalBody>
               <ModalFooter>
