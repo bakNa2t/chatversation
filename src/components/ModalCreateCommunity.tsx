@@ -53,13 +53,13 @@ const ModalCreateChat = () => {
         Create Chat
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
+        <ModalContent className="bg-fuchsia-300">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-[1.5rem]">
                 Create Chat group
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className="gap-6">
                 <Input
                   label="Name"
                   type="text"
