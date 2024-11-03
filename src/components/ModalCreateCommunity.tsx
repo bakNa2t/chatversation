@@ -53,7 +53,7 @@ const ModalCreateChat = () => {
         Create Chat
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="bg-fuchsia-300">
+        <ModalContent className="bg-fuchsia-300 backdrop-blur-sm shadow-xl shadow-rose-300">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-[1.5rem]">
@@ -72,7 +72,7 @@ const ModalCreateChat = () => {
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="primary" onPress={onClose}>
                   Cancel
                 </Button>
                 <Button

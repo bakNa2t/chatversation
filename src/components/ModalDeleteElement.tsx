@@ -31,7 +31,7 @@ const ModalDeleteMessage = ({
       </Button>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-        <ModalContent>
+        <ModalContent className="bg-fuchsia-300 backdrop-blur-sm shadow-xl shadow-rose-300">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-2xl font-bold">
