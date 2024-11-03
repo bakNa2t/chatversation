@@ -93,11 +93,11 @@ const CommunitiesList = () => {
       </div>
 
       {communityState.communities.length === 0 && isLoading === false && (
-        <div className="flex justify-center">
-          <h1 className="text-2xl font-bold text-danger-400">
+        <div className="flex justify-center items-center flex-col h-[calc(100vh-20rem)]  md:h-[calc(100vh-15rem)]">
+          <h1 className="text-xl md:text-2xl font-bold text-danger-400">
             No communities found
           </h1>
-          <p className="text-sm text-violet-500/80">
+          <p className="text-sm md:text-lg text-violet-500/80">
             Create a new community for your chat
           </p>
         </div>
