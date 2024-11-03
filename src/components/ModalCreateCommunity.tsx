@@ -52,8 +52,13 @@ const ModalCreateChat = () => {
       <Button onPress={onOpen} color="danger">
         Create Chat
       </Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="bg-fuchsia-300 backdrop-blur-sm shadow-xl shadow-rose-300">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        backdrop="blur"
+      >
+        <ModalContent className="bg-fuchsia-300 shadow-xl shadow-rose-300">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-[1.5rem]">
