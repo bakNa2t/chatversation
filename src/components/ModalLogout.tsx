@@ -68,8 +68,13 @@ const ModalLogout = ({ isMobile }: { isMobile: boolean }) => {
           Logout
         </Button>
       )}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center">
-        <ModalContent>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        backdrop="blur"
+      >
+        <ModalContent className="bg-fuchsia-300 shadow-xl shadow-rose-300">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-2xl font-bold">
