@@ -67,8 +67,14 @@ const CommunitiesList = () => {
           communityState.communities.map((community) => (
             <Card key={community.$id}>
               <CardBody>
-                <h1 className="text-xl font-bold">{community["name"]}</h1>
-                <p className="p-2">All you want to know about developers</p>
+                <h1 className="text-xl font-bold">{community.name}</h1>
+                {community.desc ? (
+                  <p className="p-2">All you want to know about developers</p>
+                ) : (
+                  <p className="p-2 text-fuchsia-500/60">
+                    ☹ Can't find any desc
+                  </p>
+                )}
                 <div className="flex justify-between items-center">
                   <Link to={`/chats/${community.$id}`}>
                     <Button
