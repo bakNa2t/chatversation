@@ -85,13 +85,19 @@ const CommunitiesList = () => {
                     </Button>
                   </Link>
 
-                  <ModalDeleteElement
-                    handleDeleteElement={() =>
-                      handleDeleteCommunity(community.$id)
-                    }
-                    nameElement="community"
-                    btnStyles="w-10 h-10 min-w-0"
-                  />
+                  <div className="flex items-center">
+                    <Button isIconOnly variant="light" radius="full">
+                      <img src="/assets/icons/edit.svg" alt="edit" />
+                    </Button>
+
+                    <ModalDeleteElement
+                      handleDeleteElement={() =>
+                        handleDeleteCommunity(community.$id)
+                      }
+                      nameElement="community"
+                      btnStyles="w-10 h-10 min-w-0"
+                    />
+                  </div>
                 </div>
               </CardBody>
             </Card>
