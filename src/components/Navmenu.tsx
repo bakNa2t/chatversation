@@ -52,7 +52,7 @@ const Navmenu = () => {
         </NavbarItem>
 
         <NavbarItem>
-          <ModalLogout />
+          <ModalLogout isMobile={isMobile} />
         </NavbarItem>
       </NavbarContent>
     </Navbar>
