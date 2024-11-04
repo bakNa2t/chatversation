@@ -28,7 +28,14 @@ const Navmenu = () => {
       </NavbarBrand>
 
       <NavbarContent justify="end">
-        <NavbarItem>{user.name}</NavbarItem>
+        <NavbarItem className="flex gap-2 items-center">
+          <img
+            src="https://xsgames.co/randomusers/avatar.php?g=pixel"
+            alt="user"
+            className="w-8 h-8 rounded-full border-1 border-fuchsia-400"
+          />
+          <p className="font-bold ">{user.name}</p>
+        </NavbarItem>
 
         <NavbarItem>
           <ModalLogout />
