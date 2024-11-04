@@ -12,7 +12,9 @@ import ModalLogout from "./ModalLogout";
 import { Link } from "react-router-dom";
 
 const Navmenu = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState<string>("");
 
   const user = userStore(
     (state) => state.user as Models.User<Models.Preferences>
@@ -24,6 +26,17 @@ const Navmenu = () => {
     } else {
       setIsMobile(false);
     }
+  }, []);
+
+  useEffect(() => {
+    fetch("https://randomuser.me/api/")
+      .then((response) => response.json())
+      .then((data) => {
+        setAvatarSrc(data.results[0].picture.thumbnail);
+
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   return (
@@ -43,11 +56,14 @@ const Navmenu = () => {
 
       <NavbarContent justify="end">
         <NavbarItem className="flex gap-2 items-center">
-          <img
-            src="https://xsgames.co/randomusers/avatar.php?g=pixel"
-            alt="user"
-            className="w-8 h-8 rounded-full border-1 border-fuchsia-400"
-          />
+          {isLoading ? null : (
+            <img
+              src={avatarSrc}
+              alt="avatar"
+              className="w-10 h-10 rounded-full border-1 border-fuchsia-400"
+            />
+          )}
+
           <p className="font-bold ">{user.name}</p>
         </NavbarItem>
 
