@@ -8,6 +8,7 @@ import { Button, Card, CardBody, Spinner } from "@nextui-org/react";
 import ModalDeleteElement from "./ModalDeleteElement";
 
 import { communityStore } from "../lib/zustand/communityStore";
+import ModalUpdateCommunity from "./ModalUpdateCommunity";
 
 const CommunitiesList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -86,9 +87,7 @@ const CommunitiesList = () => {
                   </Link>
 
                   <div className="flex items-center">
-                    <Button isIconOnly variant="light" radius="full">
-                      <img src="/assets/icons/edit.svg" alt="edit" />
-                    </Button>
+                    <ModalUpdateCommunity community={community} />
 
                     <ModalDeleteElement
                       handleDeleteElement={() =>

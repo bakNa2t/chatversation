@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AppwriteException, ID } from "appwrite";
+import { AppwriteException, ID, Models } from "appwrite";
 import { toast } from "react-toastify";
 import {
   Modal,
@@ -16,14 +16,18 @@ import {
 import { appwriteConfig, databases } from "../lib/appwrite/config";
 import { communityStore } from "../lib/zustand/communityStore";
 
-const ModalUpdateCommunity = () => {
+const ModalUpdateCommunity = ({
+  community,
+}: {
+  community: Models.Document;
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [name, setName] = useState<string>("");
-  const [desc, setDesc] = useState<string>("");
+  const [name, setName] = useState<string>(community.name);
+  const [desc, setDesc] = useState<string>(community.desc);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const communityState = communityStore();
 
-  const handleCreateChat = () => {
+  const handleUpdateChat = () => {
     setIsLoading(true);
     databases
       .createDocument(
@@ -67,11 +71,13 @@ const ModalUpdateCommunity = () => {
               <ModalBody className="gap-6">
                 <Input
                   label="Name"
+                  value={name}
                   type="text"
                   onChange={(e) => setName(e.target.value)}
                 />
                 <Input
                   label="Description"
+                  value={desc}
                   type="text"
                   onChange={(e) => setDesc(e.target.value)}
                 />
@@ -82,7 +88,7 @@ const ModalUpdateCommunity = () => {
                 </Button>
                 <Button
                   color="danger"
-                  onPress={handleCreateChat}
+                  onPress={handleUpdateChat}
                   disabled={isLoading}
                 >
                   {isLoading ? <Spinner color="secondary" /> : "Submit"}
