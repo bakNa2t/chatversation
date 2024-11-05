@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppwriteException } from "appwrite";
@@ -16,12 +16,23 @@ const SigninForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const userSessionState = userStore();
+
+  const validateEmail = (value: string) =>
+    value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+  const isInvalid = useMemo(() => {
+    if (auhtCredentials.email === "") return false;
+
+    return validateEmail(auhtCredentials.email) ? false : true;
+  }, [auhtCredentials.email]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
+
     const promise = account.createEmailPasswordSession(
       auhtCredentials.email,
       auhtCredentials.password
@@ -66,6 +77,7 @@ const SigninForm = () => {
           <div className="grid grid-cols-1 gap-4 mt-5">
             <Input
               label="Email"
+              value={auhtCredentials.email}
               type="email"
               onChange={(e) =>
                 setAuthCredentials({
@@ -73,6 +85,7 @@ const SigninForm = () => {
                   email: e.target.value,
                 })
               }
+              isInvalid={isInvalid}
             />
             <Input
               label="Password"
