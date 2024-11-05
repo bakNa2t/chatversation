@@ -9,6 +9,7 @@ type States = {
 type Actions = {
   addCommunity: (data: Models.Document) => void;
   addCommunities: (data: Array<Models.Document>) => void;
+  updateCommunity: (id: string, data: { name?: string; desc?: string }) => void;
   deleteCommunity: (id: string) => void;
 };
 
@@ -24,6 +25,13 @@ export const communityStore = create<States & Actions>()(
     addCommunities: (data: Array<Models.Document>) =>
       set(() => ({
         communities: data,
+      })),
+
+    updateCommunity: (id: string, data: { name?: string; desc?: string }) =>
+      set((state) => ({
+        communities: state.communities.map((community) =>
+          community.$id === id ? { ...community, ...data } : community
+        ),
       })),
 
     deleteCommunity: (id: string) => {
