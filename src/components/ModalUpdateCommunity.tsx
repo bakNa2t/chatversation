@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AppwriteException, ID, Models } from "appwrite";
+import { AppwriteException, Models } from "appwrite";
 import { toast } from "react-toastify";
 import {
   Modal,
@@ -30,20 +30,20 @@ const ModalUpdateCommunity = ({
   const handleUpdateChat = () => {
     setIsLoading(true);
     databases
-      .createDocument(
+      .updateDocument(
         appwriteConfig.databaseId,
         appwriteConfig.communitiesCollectionId,
-        ID.unique(),
+        community.$id,
         {
           name: name,
           desc: desc,
         }
       )
       .then((res) => {
-        communityState.addCommunity(res);
+        communityState.updateCommunity(res.$id, { name, desc });
         setIsLoading(false);
         onClose();
-        toast.success("Chat group created successfully", { theme: "colored" });
+        toast.success("Chat group updated successfully", { theme: "colored" });
       })
       .catch((error: AppwriteException) => {
         setIsLoading(false);
@@ -91,7 +91,7 @@ const ModalUpdateCommunity = ({
                   onPress={handleUpdateChat}
                   disabled={isLoading}
                 >
-                  {isLoading ? <Spinner color="secondary" /> : "Submit"}
+                  {isLoading ? <Spinner color="secondary" /> : "Update"}
                 </Button>
               </ModalFooter>
             </>

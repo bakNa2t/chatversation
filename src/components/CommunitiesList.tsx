@@ -37,7 +37,7 @@ const CommunitiesList = () => {
 
       isFetched.current = true;
     }
-  }, []);
+  }, [isFetched]);
 
   const handleDeleteCommunity = (id: string) => {
     databases
@@ -70,9 +70,9 @@ const CommunitiesList = () => {
               <CardBody>
                 <h1 className="text-xl font-bold">{community.name}</h1>
                 {community.desc ? (
-                  <p className="p-2">All you want to know about developers</p>
+                  <p className="py-2">{community.desc}</p>
                 ) : (
-                  <p className="p-2 text-fuchsia-500/60">
+                  <p className="py-2 text-fuchsia-500/60">
                     ☹ Can't find any desc
                   </p>
                 )}
