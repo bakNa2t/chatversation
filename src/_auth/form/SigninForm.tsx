@@ -8,6 +8,7 @@ import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
 import { userStore } from "../../lib/zustand/userStore";
+import { validateEmail } from "../../lib/utils";
 
 const SigninForm = () => {
   const navigate = useNavigate();
@@ -18,9 +19,6 @@ const SigninForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const userSessionState = userStore();
-
-  const validateEmail = (value: string) =>
-    value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
 
   const isInvalid = useMemo(() => {
     if (auhtCredentials.email === "") return false;
@@ -86,9 +84,14 @@ const SigninForm = () => {
                 })
               }
               isInvalid={isInvalid}
+              className={
+                isInvalid
+                  ? "border-red-500 border-2 rounded-2xl"
+                  : "border-2 border-transparent rounded-2xl"
+              }
             />
             <Input
-              label="Password"
+              label="Password (min 8 char)"
               type="password"
               onChange={(e) =>
                 setAuthCredentials({
