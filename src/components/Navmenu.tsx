@@ -56,11 +56,17 @@ const Navmenu = () => {
 
       <NavbarContent justify="end">
         <NavbarItem className="flex gap-2 items-center">
-          {isLoading ? null : (
+          {isLoading ? (
+            <img
+              src="/assets/images/default-user.png"
+              alt="avatar"
+              className="w-10 h-10 rounded-full border-2 border-fuchsia-500 shadow-fuchsia_medium"
+            />
+          ) : (
             <img
               src={avatarSrc}
               alt="avatar"
-              className="w-10 h-10 rounded-full border-1 border-fuchsia-400"
+              className="w-10 h-10 rounded-full border-2 border-fuchsia-500 shadow-fuchsia_medium"
             />
           )}
 
