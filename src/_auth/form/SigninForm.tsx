@@ -51,20 +51,20 @@ const SigninForm = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
-      <div className="w-[32rem] p-4 rounded-md shadow-lg shadow-pink-300 bg-fuchsia-200">
+    <div className="h-screen flex justify-center items-center">
+      <div className="max-w-[23rem] sm:max-w-[32rem] p-4 rounded-md shadow-xl shadow-rose-400 bg-fuchsia-200">
         <div className="flex items-center justify-center gap-3">
           <img
             src="/assets/images/chat-logo.png"
             alt="Logo"
             className="w-12 h-12 sm:w-14 sm:h-14 rounded-full"
           />
-          <span className="text-4xl font-bold text-fuchsia-500">
+          <span className="text-2xl sm:text-4xl font-bold text-fuchsia-500">
             Chatversation
           </span>
         </div>
 
-        <h1 className="w-full text-center text-2xl font-bold pt-5">
+        <h1 className="w-full text-center text-xl sm:text-2xl font-bold pt-2 sm:pt-5">
           Log in to your account
         </h1>
         <p className="w-full text-center text-fuchsia-700 mt-2">
