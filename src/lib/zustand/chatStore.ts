@@ -9,6 +9,7 @@ type States = {
 type Actions = {
   addChat: (data: Models.Document) => void;
   addChats: (data: Array<Models.Document>) => void;
+  editChatMessage: (id: string, data: { message?: string }) => void;
   deleteChat: (id: string) => void;
 };
 
@@ -24,6 +25,13 @@ export const chatStore = create<States & Actions>()(
     addChats: (data: Array<Models.Document>) =>
       set(() => ({
         chats: data,
+      })),
+
+    editChatMessage: (id: string, data: { message?: string }) =>
+      set((state) => ({
+        chats: state.chats.map((chat) =>
+          chat.$id === id ? { ...chat, ...data } : chat
+        ),
       })),
 
     deleteChat: (id: string) =>
