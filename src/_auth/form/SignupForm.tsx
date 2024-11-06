@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AppwriteException, ID } from "appwrite";
@@ -7,6 +7,7 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 
 import { account } from "../../lib/appwrite/config";
+import { validateEmail } from "../../lib/utils";
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -16,6 +17,12 @@ const SignupForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const isInvalid = useMemo(() => {
+    if (auhtCredentials.email === "") return false;
+
+    return validateEmail(auhtCredentials.email) ? false : true;
+  }, [auhtCredentials.email]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,6 +96,12 @@ const SignupForm = () => {
                 })
               }
               isRequired
+              isInvalid={isInvalid}
+              className={
+                isInvalid
+                  ? "border-red-500 border-2 rounded-2xl"
+                  : "border-2 border-transparent rounded-2xl"
+              }
             />
 
             <Input
