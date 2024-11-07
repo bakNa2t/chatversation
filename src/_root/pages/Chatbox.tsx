@@ -10,6 +10,7 @@ import ModalEditMessage from "../../components/ModalEditMessage";
 import { userStore } from "../../lib/zustand/userStore";
 import { chatStore } from "../../lib/zustand/chatStore";
 import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
+import { formatTime } from "../../lib/utils";
 
 const Chatbox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -116,7 +117,7 @@ const Chatbox = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center">
+      <div className="min-h-[34rem] flex justify-center">
         <Spinner color="secondary" />
       </div>
     );
@@ -129,9 +130,14 @@ const Chatbox = () => {
             chat.user_id === user.$id ? (
               <div className="flex justify-end mb-4" key={chat.$id}>
                 <div className="flex gap-2 sm:gap-3">
-                  <div className="shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-52 sm:max-w-96 rounded-lg ">
-                    <h1 className="font-bold text-xl">{chat.name}</h1>
-                    <p>{chat.message}</p>
+                  <div className="flex flex-col gap-1 shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-52 sm:max-w-96 rounded-lg ">
+                    <h1 className="font-bold text-xl border-b-1 border-fuchsia-400">
+                      {chat.name}
+                    </h1>
+                    <p className="break-words">{chat.message}</p>
+                    <div className="text-xs text-right text-slate-600/80 italic">
+                      {formatTime(chat.$createdAt)}
+                    </div>
                   </div>
 
                   <div className="flex flex-col justify-between py-2">
@@ -147,9 +153,14 @@ const Chatbox = () => {
               </div>
             ) : (
               <div className="flex justify-start mb-2" key={chat.$id}>
-                <div className="shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-52 sm:max-w-96 rounded-lg">
-                  <h1 className="font-bold text-xl">{chat.name}</h1>
+                <div className="flex flex-col gap-1 shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-52 sm:max-w-96 rounded-lg">
+                  <h1 className="font-bold text-xl border-b-1 border-violet-400">
+                    {chat.name}
+                  </h1>
                   <p>{chat.message}</p>
+                  <div className="text-xs text-right text-slate-600/80 italic">
+                    {formatTime(chat.$createdAt)}
+                  </div>
                 </div>
               </div>
             )
