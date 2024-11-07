@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { /*AppwriteException,*/ Models } from "appwrite";
-// import { toast } from "react-toastify";
+import { AppwriteException, Models } from "appwrite";
+import { toast } from "react-toastify";
 import {
   Modal,
   ModalContent,
@@ -13,14 +13,39 @@ import {
   Spinner,
 } from "@nextui-org/react";
 
+import { appwriteConfig, databases } from "../lib/appwrite/config";
+import { chatStore } from "../lib/zustand/chatStore";
+
 const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
-  const [isLoading /*, setIsLoading*/] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>(chat.name);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>(chat.message);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
+  const chatState = chatStore();
+
   const handleEditChat = () => {
-    console.log("Message has been edited");
-    onClose();
+    setIsLoading(true);
+
+    databases
+      .updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatboxesCollectionId,
+        chat.$id,
+        {
+          message: message,
+        }
+      )
+      .then((res) => {
+        chatState.editChatMessage(res.$id, { message: message });
+        setIsLoading(false);
+
+        toast.success("Message edited successfully", { theme: "colored" });
+        onClose();
+      })
+      .catch((error: AppwriteException) => {
+        setIsLoading(false);
+        toast.error(error.message, { theme: "colored" });
+      });
   };
 
   return (
@@ -48,7 +73,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
               </ModalHeader>
               <ModalBody className="gap-6">
                 <Input
-                  label="Type message"
+                  label="New message"
                   value={message}
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}
@@ -63,7 +88,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
                   onPress={handleEditChat}
                   disabled={isLoading}
                 >
-                  {isLoading ? <Spinner color="secondary" /> : "Update"}
+                  {isLoading ? <Spinner color="secondary" /> : "Edit"}
                 </Button>
               </ModalFooter>
             </>
