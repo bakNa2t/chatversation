@@ -16,14 +16,14 @@ import {
 import { appwriteConfig, databases } from "../lib/appwrite/config";
 import { communityStore } from "../lib/zustand/communityStore";
 
-const ModalCreateChat = () => {
+const ModalCreateCommunity = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const communityState = communityStore();
 
-  const handleCreateChat = () => {
+  const handleCreateCommunity = () => {
     setIsLoading(true);
     databases
       .createDocument(
@@ -82,7 +82,7 @@ const ModalCreateChat = () => {
                 </Button>
                 <Button
                   color="danger"
-                  onPress={handleCreateChat}
+                  onPress={handleCreateCommunity}
                   disabled={isLoading}
                 >
                   {isLoading ? <Spinner color="secondary" /> : "Submit"}
@@ -96,4 +96,4 @@ const ModalCreateChat = () => {
   );
 };
 
-export default ModalCreateChat;
+export default ModalCreateCommunity;
