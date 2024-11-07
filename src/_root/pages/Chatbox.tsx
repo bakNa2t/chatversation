@@ -60,6 +60,12 @@ const Chatbox = () => {
   const handleMessageSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (message.trim().length === 0) {
+      toast.error("A message cannot be empty", { theme: "colored" });
+      setMessage("");
+      return;
+    }
+
     databases
       .createDocument(
         appwriteConfig.databaseId,
@@ -77,7 +83,7 @@ const Chatbox = () => {
         setMessage("");
       })
       .catch((error: AppwriteException) => {
-        toast(error.message, { theme: "colored" });
+        toast.error(error.message, { theme: "colored" });
       });
   };
 
@@ -128,7 +134,7 @@ const Chatbox = () => {
         {chatState.chats.length > 0 &&
           chatState.chats.map((chat) =>
             chat.user_id === user.$id ? (
-              <div className="flex justify-end mb-4" key={chat.$id}>
+              <div className="flex justify-end mb-5" key={chat.$id}>
                 <div className="flex gap-2 sm:gap-3">
                   <div className="flex flex-col gap-1 shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-52 sm:max-w-96 rounded-lg ">
                     <h1 className="font-bold text-xl border-b-1 border-fuchsia-400">
@@ -152,7 +158,7 @@ const Chatbox = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex justify-start mb-2" key={chat.$id}>
+              <div className="flex justify-start mb-5" key={chat.$id}>
                 <div className="flex flex-col gap-1 shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-52 sm:max-w-96 rounded-lg">
                   <h1 className="font-bold text-xl border-b-1 border-violet-400">
                     {chat.name}
