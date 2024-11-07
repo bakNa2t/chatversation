@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import { Button, Input, Spinner } from "@nextui-org/react";
 import ModalDeleteElement from "../../components/ModalDeleteElement";
+import ModalEditMessage from "../../components/ModalEditMessage";
 
 import { userStore } from "../../lib/zustand/userStore";
 import { chatStore } from "../../lib/zustand/chatStore";
@@ -30,7 +31,6 @@ const Chatbox = () => {
       client.subscribe(
         `databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.chatboxesCollectionId}.documents`,
         (response) => {
-          console.log("Response is ", response);
           const payload = response.payload as Models.Document;
 
           // verify db for new message
@@ -128,13 +128,15 @@ const Chatbox = () => {
           chatState.chats.map((chat) =>
             chat.user_id === user.$id ? (
               <div className="flex justify-end mb-4" key={chat.$id}>
-                <div className="flex flex-col">
-                  <div className="shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-72 rounded-lg ">
+                <div className="flex gap-2 sm:gap-3">
+                  <div className="shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-52 sm:max-w-96 rounded-lg ">
                     <h1 className="font-bold text-xl">{chat.name}</h1>
                     <p>{chat.message}</p>
                   </div>
 
-                  <div className="flex justify-end mt-2">
+                  <div className="flex flex-col justify-between py-2">
+                    <ModalEditMessage chat={chat} />
+
                     <ModalDeleteElement
                       handleDeleteElement={() => handleDeleteMessage(chat.$id)}
                       nameElement="message"
@@ -145,7 +147,7 @@ const Chatbox = () => {
               </div>
             ) : (
               <div className="flex justify-start mb-2" key={chat.$id}>
-                <div className="shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-72 rounded-lg">
+                <div className="shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-52 sm:max-w-96 rounded-lg">
                   <h1 className="font-bold text-xl">{chat.name}</h1>
                   <p>{chat.message}</p>
                 </div>
@@ -165,7 +167,7 @@ const Chatbox = () => {
               type="text"
               label="Type message..."
               value={message}
-              onChange={(e) => setMessage(e.target.value.trim())}
+              onChange={(e) => setMessage(e.target.value)}
             />
 
             {message && (
