@@ -175,7 +175,7 @@ const Chatbox = () => {
 
       {/* Input message block */}
       <div
-        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 backdrop-blur-md bg-opacity-40 sm:w-[calc(100vw-20px)]"
+        className="p-8 bottom-0 left-0 right-0 bg-fuchsia-200 dark:bg-stone-800 backdrop-blur-md bg-opacity-40 dark:backdrop-blur-md dark:bg-opacity-40 sm:w-[calc(100vw-20px)]"
         style={{ position: "fixed" }}
       >
         <form onSubmit={handleMessageSubmit}>

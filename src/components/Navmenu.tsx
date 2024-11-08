@@ -57,7 +57,7 @@ const Navmenu = () => {
   };
 
   return (
-    <Navbar className="bg-fuchsia-300/50">
+    <Navbar className="bg-fuchsia-300/50 dark:bg-stone-800/50">
       <NavbarBrand className="gap-2">
         <Link to="/">
           <img

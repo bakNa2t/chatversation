@@ -3,7 +3,7 @@ import Navmenu from "../components/Navmenu";
 
 const RootLayout = () => {
   return (
-    <div className="h-screen overflow-auto bg-fuchsia-200 w-full">
+    <div className="h-screen overflow-auto bg-fuchsia-200 dark:bg-stone-700 w-full">
       <Navmenu />
 
       <section className="p-4 md:py-10 md:px-60">
