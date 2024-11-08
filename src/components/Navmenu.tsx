@@ -16,11 +16,13 @@ const Navmenu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState<string>("");
+  const [theme, setTheme] = useState<string>("dark");
 
   const user = userStore(
     (state) => state.user as Models.User<Models.Preferences>
   );
 
+  // check screen width
   useEffect(() => {
     if (screen.width < 640) {
       setIsMobile(true);
@@ -29,6 +31,7 @@ const Navmenu = () => {
     }
   }, []);
 
+  // fetch random avatar
   useEffect(() => {
     fetch("https://randomuser.me/api/")
       .then((response) => response.json())
@@ -39,6 +42,19 @@ const Navmenu = () => {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  //toggle theme mode
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const handleThemeApp = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
     <Navbar className="bg-fuchsia-300/50">
@@ -82,9 +98,14 @@ const Navmenu = () => {
           <Button
             radius="full"
             className="bg-transparent min-w-10 px-0 sm:min-w-10 border-2 border-transparent hover:border-fuchsia-400"
+            onPress={handleThemeApp}
           >
             <img
-              src="/assets/icons/theme-dark.svg"
+              src={
+                theme === "dark"
+                  ? "/assets/icons/theme-light.svg"
+                  : "/assets/icons/theme-dark.svg"
+              }
               alt="theme-mode"
               className="w-8 h-8 p-1 sm:p-[0.25rem]"
             />
