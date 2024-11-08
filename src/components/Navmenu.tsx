@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import {
+  Button,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -54,8 +55,8 @@ const Navmenu = () => {
         )}
       </NavbarBrand>
 
-      <NavbarContent justify="end">
-        <NavbarItem className="flex gap-2 items-center">
+      <NavbarContent justify="end" className="">
+        <NavbarItem className="flex flex-shrink-0 gap-2 sm:gap-3 items-center">
           {isLoading ? (
             <img
               src="/assets/images/default-user.png"
@@ -70,11 +71,24 @@ const Navmenu = () => {
             />
           )}
 
-          <p className="font-bold ">{user.name}</p>
+          <p className="font-bold">{user.name}</p>
         </NavbarItem>
 
         <NavbarItem>
           <ModalLogout isMobile={isMobile} />
+        </NavbarItem>
+
+        <NavbarItem>
+          <Button
+            radius="full"
+            className="bg-transparent sm:min-w-0 px-2 border-2 border-transparent hover:border-fuchsia-400"
+          >
+            <img
+              src="/assets/icons/theme-dark.svg"
+              alt="theme-mode"
+              className="w-6 h-6 sm:w-8 sm:h-8"
+            />
+          </Button>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
