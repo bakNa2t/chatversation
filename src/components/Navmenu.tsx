@@ -55,7 +55,7 @@ const Navmenu = () => {
         )}
       </NavbarBrand>
 
-      <NavbarContent justify="end" className="">
+      <NavbarContent justify="end" className="gap-2">
         <NavbarItem className="flex flex-shrink-0 gap-2 sm:gap-3 items-center">
           {isLoading ? (
             <img
@@ -81,12 +81,12 @@ const Navmenu = () => {
         <NavbarItem>
           <Button
             radius="full"
-            className="bg-transparent sm:min-w-0 px-2 border-2 border-transparent hover:border-fuchsia-400"
+            className="bg-transparent min-w-10 px-0 sm:min-w-10 border-2 border-transparent hover:border-fuchsia-400"
           >
             <img
               src="/assets/icons/theme-dark.svg"
               alt="theme-mode"
-              className="w-6 h-6 sm:w-8 sm:h-8"
+              className="w-8 h-8 p-1 sm:p-[0.25rem]"
             />
           </Button>
         </NavbarItem>

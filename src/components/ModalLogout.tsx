@@ -44,7 +44,7 @@ const ModalLogout = ({ isMobile }: { isMobile: boolean }) => {
           onPress={onOpen}
           isIconOnly
           variant="bordered"
-          className="border-rose-600"
+          className="border-[#e879f9]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ const ModalLogout = ({ isMobile }: { isMobile: boolean }) => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-log-out text-rose-600"
+            className="lucide lucide-log-out text-[#e879f9]"
           >
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             <polyline points="16 17 21 12 16 7" />
