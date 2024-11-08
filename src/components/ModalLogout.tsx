@@ -42,9 +42,8 @@ const ModalLogout = ({ isMobile }: { isMobile: boolean }) => {
       {isMobile ? (
         <Button
           onPress={onOpen}
-          isIconOnly
-          variant="bordered"
-          className="border-[#e879f9]"
+          radius="full"
+          className="bg-transparent min-w-10 px-0 sm:min-w-10 border-2 border-transparent hover:border-fuchsia-400"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
