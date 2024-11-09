@@ -136,12 +136,12 @@ const Chatbox = () => {
             chat.user_id === user.$id ? (
               <div className="flex justify-end mb-5" key={chat.$id}>
                 <div className="flex gap-2 sm:gap-3">
-                  <div className="flex flex-col gap-1 shadow-lg shadow-fuchsia-400 bg-fuchsia-300 p-2 max-w-52 sm:max-w-96 rounded-lg ">
+                  <div className="flex flex-col gap-1 bg-fuchsia-300 dark:bg-stone-800 shadow-lg shadow-fuchsia-400 dark:shadow-lg dark:shadow-purple-600 p-2 max-w-52 sm:max-w-96 rounded-lg ">
                     <h1 className="font-bold text-xl border-b-1 border-fuchsia-400">
                       {chat.name}
                     </h1>
                     <p className="break-words">{chat.message}</p>
-                    <div className="text-xs text-right text-slate-600/80 italic">
+                    <div className="text-xs text-right text-slate-600/80 dark:text-purple-400/80 italic">
                       {formatTime(chat.$createdAt)}
                     </div>
                   </div>
@@ -159,12 +159,12 @@ const Chatbox = () => {
               </div>
             ) : (
               <div className="flex justify-start mb-5" key={chat.$id}>
-                <div className="flex flex-col gap-1 shadow-lg shadow-violet-400 bg-violet-300 p-2 max-w-52 sm:max-w-96 rounded-lg">
+                <div className="flex flex-col gap-1 bg-violet-300 dark:bg-indigo-900 shadow-lg shadow-violet-400 dark:shadow-lg dark:shadow-blue-400 p-2 max-w-52 sm:max-w-96 rounded-lg">
                   <h1 className="font-bold text-xl border-b-1 border-violet-400">
                     {chat.name}
                   </h1>
                   <p>{chat.message}</p>
-                  <div className="text-xs text-right text-slate-600/80 italic">
+                  <div className="text-xs text-right text-slate-600/80 dark:text-purple-400/80 italic">
                     {formatTime(chat.$createdAt)}
                   </div>
                 </div>
