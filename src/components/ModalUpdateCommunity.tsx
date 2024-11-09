@@ -62,7 +62,7 @@ const ModalUpdateCommunity = ({
         placement="center"
         backdrop="blur"
       >
-        <ModalContent className="bg-fuchsia-300 shadow-xl shadow-rose-300">
+        <ModalContent className="bg-fuchsia-300 dark:bg-stone-700 shadow-xl shadow-rose-300 dark:shadow-xl dark:shadow-fuchsia-500">
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1 text-[1.5rem]">
