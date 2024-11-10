@@ -67,15 +67,17 @@ const CommunitiesList = () => {
         {communityState.communities.length > 0 &&
           communityState.communities.map((community) => (
             <Card key={community.$id}>
-              <CardBody>
-                <h1 className="text-xl font-bold">{community.name}</h1>
-                {community.desc ? (
-                  <p className="py-2">{community.desc}</p>
-                ) : (
-                  <p className="py-2 text-fuchsia-500/60">
-                    ☹ Can't find any desc
-                  </p>
-                )}
+              <CardBody className="justify-between">
+                <div className="flex flex-col">
+                  <h1 className="text-xl font-bold">{community.name}</h1>
+                  {community.desc ? (
+                    <p className="py-2">{community.desc}</p>
+                  ) : (
+                    <p className="py-2 text-fuchsia-500/60">
+                      ☹ Can't find any desc
+                    </p>
+                  )}
+                </div>
                 <div className="flex justify-between items-center">
                   <Link to={`/chats/${community.$id}`}>
                     <Button
