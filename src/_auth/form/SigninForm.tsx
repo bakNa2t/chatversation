@@ -17,8 +17,13 @@ const SigninForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const userSessionState = userStore();
+
+  const togglePasswordVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   const isInvalid = useMemo(() => {
     if (auhtCredentials.email === "") return false;
