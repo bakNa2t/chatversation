@@ -105,26 +105,28 @@ const SigninForm = () => {
                 })
               }
               endContent={
-                <button
-                  className="focus:outline-none pb-[calc(0.5rem-1px)]"
-                  type="button"
-                  onClick={togglePasswordVisibility}
-                  aria-label="toggle password visibility"
-                >
-                  {isVisible ? (
-                    <img
-                      src="/assets/icons/eye-on.svg"
-                      alt="eye"
-                      className="opacity-50"
-                    />
-                  ) : (
-                    <img
-                      src="/assets/icons/eye-off.svg"
-                      alt="eye"
-                      className="opacity-50"
-                    />
-                  )}
-                </button>
+                auhtCredentials.password.length > 0 && (
+                  <button
+                    className="focus:outline-none pb-[calc(0.5rem-1px)]"
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    aria-label="toggle password visibility"
+                  >
+                    {isVisible ? (
+                      <img
+                        src="/assets/icons/eye-on.svg"
+                        alt="eye"
+                        className="opacity-50"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/icons/eye-off.svg"
+                        alt="eye"
+                        className="opacity-50"
+                      />
+                    )}
+                  </button>
+                )
               }
             />
             <Button
