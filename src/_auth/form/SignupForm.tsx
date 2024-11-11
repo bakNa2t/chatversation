@@ -42,7 +42,7 @@ const SignupForm = () => {
     );
     promis
       .then((res) => {
-        console.log("The response was: ", res);
+        if (!res) toast.error("Account creation failed", { theme: "colored" });
         setIsLoading(false);
 
         navigate("/sign-in");
