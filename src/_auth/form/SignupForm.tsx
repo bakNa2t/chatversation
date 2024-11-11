@@ -17,6 +17,11 @@ const SignupForm = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const togglePasswordVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   const isInvalid = useMemo(() => {
     if (auhtCredentials.email === "") return false;
@@ -106,7 +111,7 @@ const SignupForm = () => {
 
             <Input
               label="Password"
-              type="password"
+              type={isVisible ? "text" : "password"}
               onChange={(e) =>
                 setAuthCredentials({
                   ...auhtCredentials,
@@ -114,6 +119,28 @@ const SignupForm = () => {
                 })
               }
               isRequired
+              endContent={
+                <button
+                  className="focus:outline-none pb-[calc(0.5rem-1px)]"
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  aria-label="toggle password visibility"
+                >
+                  {isVisible ? (
+                    <img
+                      src="/assets/icons/eye-on.svg"
+                      alt="eye"
+                      className="opacity-50"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/icons/eye-off.svg"
+                      alt="eye"
+                      className="opacity-50"
+                    />
+                  )}
+                </button>
+              }
             />
             <Button
               type="submit"
