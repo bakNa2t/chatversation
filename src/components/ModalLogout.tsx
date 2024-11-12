@@ -15,7 +15,7 @@ import {
 import { account } from "../lib/appwrite/config";
 import { userStore } from "../lib/zustand/userStore";
 
-const ModalLogout = ({ isMobile }: { isMobile: boolean }) => {
+const ModalLogout = ({ isMobile }: { isMobile?: boolean }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
