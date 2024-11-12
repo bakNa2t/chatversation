@@ -72,6 +72,7 @@ const ModalLogout = ({ isMobile }: { isMobile?: boolean }) => {
         onOpenChange={onOpenChange}
         placement="center"
         backdrop="blur"
+        className={isMobile ? "max-w-[25rem]" : ""}
       >
         <ModalContent className="bg-fuchsia-300 dark:bg-stone-700 shadow-xl shadow-rose-300 dark:shadow-xl dark:shadow-fuchsia-500">
           {(onClose) => (
