@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Models } from "appwrite";
 
 import {
   Button,
@@ -10,29 +12,21 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from "@nextui-org/react";
-import { Models } from "appwrite";
-import { userStore } from "../lib/zustand/userStore";
 import ModalLogout from "./ModalLogout";
-import { Link } from "react-router-dom";
+
+import { userStore } from "../lib/zustand/userStore";
+import { useMobileScreen } from "../hooks/useMobileScreen";
 
 const Navmenu = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [avatarSrc, setAvatarSrc] = useState<string>("");
   const [theme, setTheme] = useState<string>("dark");
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
+  const { isMobile } = useMobileScreen();
+
   const user = userStore(
     (state) => state.user as Models.User<Models.Preferences>
   );
-
-  // check screen width
-  useEffect(() => {
-    if (screen.width < 640) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, []);
 
   // fetch random avatar
   useEffect(() => {
