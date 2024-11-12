@@ -13,8 +13,7 @@ import ModalLogout from "./ModalLogout";
 import { Link } from "react-router-dom";
 
 const Navmenu = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [avatarSrc, setAvatarSrc] = useState<string>("");
   const [theme, setTheme] = useState<string>("dark");
 
@@ -33,15 +32,18 @@ const Navmenu = () => {
 
   // fetch random avatar
   useEffect(() => {
-    fetch("https://randomuser.me/api/")
-      .then((response) => response.json())
-      .then((data) => {
-        setAvatarSrc(data.results[0].picture.thumbnail);
+    const fetchRandomAvatar = async () => {
+      try {
+        const response = await fetch("https://randomuser.me/api/");
+        const data = await response.json();
 
-        setIsLoading(false);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+        setAvatarSrc(data.results[0].picture.thumbnail);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchRandomAvatar();
+  }, [setAvatarSrc]);
 
   //toggle theme mode
   useEffect(() => {
@@ -73,7 +75,7 @@ const Navmenu = () => {
 
       <NavbarContent justify="end" className="gap-2">
         <NavbarItem className="flex flex-shrink-0 gap-2 sm:gap-3 items-center">
-          {isLoading ? (
+          {avatarSrc === "" ? (
             <img
               src="/assets/images/default-user.png"
               alt="avatar"
