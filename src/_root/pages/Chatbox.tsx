@@ -57,7 +57,7 @@ const Chatbox = () => {
     }
   }, []);
 
-  const handleMessageSubmit = (e: React.FormEvent) => {
+  const handleMessageSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (message.trim().length === 0) {
@@ -66,8 +66,8 @@ const Chatbox = () => {
       return;
     }
 
-    databases
-      .createDocument(
+    try {
+      const res = await databases.createDocument(
         appwriteConfig.databaseId,
         appwriteConfig.chatboxesCollectionId,
         ID.unique(),
@@ -77,14 +77,15 @@ const Chatbox = () => {
           community_id: id,
           name: user.name,
         }
-      )
-      .then((res) => {
-        chatState.addChat(res);
-        setMessage("");
-      })
-      .catch((error: AppwriteException) => {
-        toast.error(error.message, { theme: "colored" });
-      });
+      );
+
+      chatState.addChat(res);
+
+      setMessage("");
+    } catch (error) {
+      const err = error as AppwriteException;
+      toast.error(err.message, { theme: "colored" });
+    }
   };
 
   const handleFetchMessage = () => {
