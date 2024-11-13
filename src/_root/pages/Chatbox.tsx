@@ -98,38 +98,44 @@ const Chatbox = () => {
     }
   };
 
-  const handleFetchMessage = () => {
+  const handleFetchMessage = async () => {
     setIsLoading(true);
 
-    databases
-      .listDocuments(
+    try {
+      const res = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.chatboxesCollectionId
-      )
-      .then((res) => {
-        setIsLoading(false);
+      );
+      setIsLoading(false);
 
-        chatState.addChats(res.documents);
-      })
-      .catch((error: AppwriteException) => {
-        setIsLoading(false);
-        toast.error(error.message, { theme: "colored" });
-      });
+      chatState.addChats(res.documents);
+    } catch (error) {
+      const err = error as AppwriteException;
+      setIsLoading(false);
+      toast.error(err.message, { theme: "colored" });
+    }
   };
 
-  const handleDeleteMessage = (id: string) => {
-    databases
-      .deleteDocument(
+  const handleDeleteMessage = async (id: string) => {
+    try {
+      const res = await databases.deleteDocument(
         appwriteConfig.databaseId,
         appwriteConfig.chatboxesCollectionId,
         id
-      )
-      .then(() => {
-        chatState.deleteChat(id);
-      })
-      .catch((error: AppwriteException) => {
-        toast.error(error.message, { theme: "colored" });
-      });
+      );
+
+      if (!res) {
+        toast.error("Message deletion failed", { theme: "colored" });
+        return;
+      }
+
+      chatState.deleteChat(id);
+
+      toast.success("Message deleted successfully", { theme: "colored" });
+    } catch (error) {
+      const err = error as AppwriteException;
+      toast.error(err.message, { theme: "colored" });
+    }
   };
 
   if (isLoading)
