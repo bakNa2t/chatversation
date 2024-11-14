@@ -2,15 +2,17 @@ import { Models } from "appwrite";
 
 import { formatTime } from "../lib/utils";
 
+interface ColorClassProps {
+  box: string;
+  header: string;
+}
+
 const Message = ({
   chat,
   colorClass,
 }: {
   chat: Models.Document;
-  colorClass?: {
-    box: string;
-    header: string;
-  };
+  colorClass?: ColorClassProps;
 }) => {
   return (
     <div
