@@ -35,6 +35,8 @@ const Navmenu = () => {
         const response = await fetch("https://randomuser.me/api/");
         const data = await response.json();
 
+        console.log(data);
+
         setAvatarSrc(data.results[0].picture.thumbnail);
       } catch (error) {
         console.log(error);
@@ -80,7 +82,7 @@ const Navmenu = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent justify="end" className="gap-2">
+      <NavbarContent justify="end" className="sm:gap-6">
         <NavbarItem className="flex flex-shrink-0 gap-2 sm:gap-3 items-center">
           {avatarSrc === "" ? (
             <img
@@ -96,7 +98,9 @@ const Navmenu = () => {
             />
           )}
 
-          <p className="font-bold">{user.name}</p>
+          <p className="sm:text-lg font-bold drop-shadow-base_drk dark:drop-shadow-base_lgt">
+            {user.name}
+          </p>
         </NavbarItem>
 
         <NavbarItem className="hidden sm:flex">
