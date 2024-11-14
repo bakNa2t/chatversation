@@ -1,4 +1,4 @@
-import { Account, Client, Databases } from "appwrite";
+import { Account, Avatars, Client, Databases } from "appwrite";
 
 export const appwriteConfig = {
   url: import.meta.env.VITE_APPWRITE_URL,
@@ -16,3 +16,4 @@ client.setProject(appwriteConfig.projectId);
 
 export const account = new Account(client);
 export const databases = new Databases(client);
+export const avatars = new Avatars(client);
