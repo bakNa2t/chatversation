@@ -23,10 +23,11 @@ const ModalCreateCommunity = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const communityState = communityStore();
 
-  const handleCreateCommunity = () => {
+  const handleCreateCommunity = async () => {
     setIsLoading(true);
-    databases
-      .createDocument(
+
+    try {
+      const res = await databases.createDocument(
         appwriteConfig.databaseId,
         appwriteConfig.communitiesCollectionId,
         ID.unique(),
@@ -34,18 +35,43 @@ const ModalCreateCommunity = () => {
           name: name,
           desc: desc,
         }
-      )
-      .then((res) => {
-        communityState.addCommunity(res);
-        setIsLoading(false);
-        onClose();
-        toast.success("Chat group created successfully", { theme: "colored" });
-      })
-      .catch((error: AppwriteException) => {
-        setIsLoading(false);
-        toast.error(error.message, { theme: "colored" });
-      });
+      );
+
+      communityState.addCommunity(res);
+
+      setIsLoading(false);
+
+      onClose();
+
+      toast.success("Chat group created successfully", { theme: "colored" });
+    } catch (error) {
+      const err = error as AppwriteException;
+      setIsLoading(false);
+      toast.error(err.message, { theme: "colored" });
+    }
   };
+  //   setIsLoading(true);
+  //   databases
+  //     .createDocument(
+  //       appwriteConfig.databaseId,
+  //       appwriteConfig.communitiesCollectionId,
+  //       ID.unique(),
+  //       {
+  //         name: name,
+  //         desc: desc,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       communityState.addCommunity(res);
+  //       setIsLoading(false);
+  //       onClose();
+  //       toast.success("Chat group created successfully", { theme: "colored" });
+  //     })
+  //     .catch((error: AppwriteException) => {
+  //       setIsLoading(false);
+  //       toast.error(error.message, { theme: "colored" });
+  //     });
+  // };
 
   return (
     <>
@@ -86,7 +112,7 @@ const ModalCreateCommunity = () => {
                   onPress={handleCreateCommunity}
                   disabled={isLoading}
                 >
-                  {isLoading ? <Spinner color="secondary" /> : "Submit"}
+                  {isLoading ? <Spinner color="secondary" /> : "Create"}
                 </Button>
               </ModalFooter>
             </>
