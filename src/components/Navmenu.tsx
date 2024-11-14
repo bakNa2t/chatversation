@@ -16,6 +16,7 @@ import ModalLogout from "./ModalLogout";
 
 import { userStore } from "../lib/zustand/userStore";
 import { useMobileScreen } from "../hooks/useMobileScreen";
+import { avatars } from "../lib/appwrite/config";
 
 const Navmenu = () => {
   const [avatarSrc, setAvatarSrc] = useState<string>("");
@@ -28,22 +29,20 @@ const Navmenu = () => {
     (state) => state.user as Models.User<Models.Preferences>
   );
 
-  // fetch random avatar
+  // fetch user avatar from appwrite
   useEffect(() => {
-    const fetchRandomAvatar = async () => {
+    const fetchUserAvatar = () => {
       try {
-        const response = await fetch("https://randomuser.me/api/");
-        const data = await response.json();
+        const res = avatars.getInitials(user.name);
 
-        console.log(data);
-
-        setAvatarSrc(data.results[0].picture.thumbnail);
+        setAvatarSrc(res);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchRandomAvatar();
-  }, [setAvatarSrc]);
+
+    fetchUserAvatar();
+  }, [user, setAvatarSrc]);
 
   //toggle theme mode
   useEffect(() => {
