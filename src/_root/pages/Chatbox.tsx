@@ -14,12 +14,12 @@ import { appwriteConfig, client, databases } from "../../lib/appwrite/config";
 
 const colorPrimary = {
   box: "bg-fuchsia-300 dark:bg-stone-800 shadow-lg shadow-fuchsia-400 dark:shadow-lg dark:shadow-purple-600",
-  header: "border-fuchsia-400",
+  header: "border-fuchsia-400 text-slate-800/60 dark:text-fuchsia-400/60",
 };
 
 const colorSecondary = {
   box: "bg-violet-300 dark:bg-indigo-900 shadow-lg shadow-violet-400 dark:shadow-lg dark:shadow-blue-400",
-  header: "border-violet-400 text-violet-700 dark:text-indigo-400",
+  header: "border-violet-400 text-violet-700/60 dark:text-indigo-400/60",
 };
 
 const Chatbox = () => {
