@@ -148,7 +148,7 @@ const Chatbox = () => {
   return (
     <div className="flex flex-col">
       <div className="flex-1 p-4 mb-20">
-        {chatState.chats.length > 0 &&
+        {chatState.chats.length > 0 ? (
           chatState.chats.map((chat) =>
             chat.user_id === user.$id ? (
               <div className="flex justify-end mb-5" key={chat.$id}>
@@ -171,7 +171,14 @@ const Chatbox = () => {
                 <Message chat={chat} colorClass={colorSecondary} />
               </div>
             )
-          )}
+          )
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <h1 className="text-xl font-semibold opacity-60">
+              No messages yet
+            </h1>
+          </div>
+        )}
       </div>
 
       {/* Input message block */}
