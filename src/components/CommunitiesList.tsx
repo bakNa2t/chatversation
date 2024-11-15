@@ -17,41 +17,51 @@ const CommunitiesList = () => {
   const communityState = communityStore();
 
   useEffect(() => {
-    if (!isFetched.current) {
-      setIsLoading(true);
+    const fetchCommunities = async () => {
+      if (!isFetched.current) {
+        setIsLoading(true);
 
-      databases
-        .listDocuments(
-          appwriteConfig.databaseId,
-          appwriteConfig.communitiesCollectionId,
-          [Query.select(["$id", "name", "desc"])]
-        )
-        .then((res) => {
-          setIsLoading(false);
+        try {
+          const res = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.communitiesCollectionId,
+            [Query.select(["$id", "name", "desc"])]
+          );
+
           communityState.addCommunities(res.documents);
-        })
-        .catch((error: AppwriteException) => {
           setIsLoading(false);
-          toast.error(error.message, { theme: "colored" });
-        });
+        } catch (error) {
+          const err = error as AppwriteException;
+          setIsLoading(false);
+          toast.error(err.message, { theme: "colored" });
+        }
 
-      isFetched.current = true;
-    }
+        isFetched.current = true;
+      }
+    };
+
+    fetchCommunities();
   }, [isFetched]);
 
-  const handleDeleteCommunity = (id: string) => {
-    databases
-      .deleteDocument(
+  const handleDeleteCommunity = async (id: string) => {
+    try {
+      const res = await databases.deleteDocument(
         appwriteConfig.databaseId,
         appwriteConfig.communitiesCollectionId,
         id
-      )
-      .then(() => {
-        communityState.deleteCommunity(id);
-      })
-      .catch((error: AppwriteException) => {
-        toast.error(error.message, { theme: "colored" });
-      });
+      );
+
+      if (!res) {
+        toast.error("Community deletion failed", { theme: "colored" });
+        return;
+      }
+
+      communityState.deleteCommunity(id);
+      toast.success("Community deleted successfully", { theme: "colored" });
+    } catch (error) {
+      const err = error as AppwriteException;
+      toast.error(err.message, { theme: "colored" });
+    }
   };
 
   if (isLoading)
