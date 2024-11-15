@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Models } from "appwrite";
 
@@ -30,7 +30,7 @@ const Navmenu = () => {
   );
 
   // fetch user avatar from appwrite
-  useEffect(() => {
+  useMemo(() => {
     const fetchUserAvatar = () => {
       try {
         const res = avatars.getInitials(user.name);
