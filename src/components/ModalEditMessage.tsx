@@ -23,29 +23,30 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
 
   const chatState = chatStore();
 
-  const handleEditChat = () => {
+  const handleEditChatMessage = async () => {
     setIsLoading(true);
 
-    databases
-      .updateDocument(
+    try {
+      const res = await databases.updateDocument(
         appwriteConfig.databaseId,
         appwriteConfig.chatboxesCollectionId,
         chat.$id,
         {
           message: message,
         }
-      )
-      .then((res) => {
-        chatState.editChatMessage(res.$id, { message: message });
-        setIsLoading(false);
+      );
 
-        toast.success("Message edited successfully", { theme: "colored" });
-        onClose();
-      })
-      .catch((error: AppwriteException) => {
-        setIsLoading(false);
-        toast.error(error.message, { theme: "colored" });
-      });
+      chatState.editChatMessage(res.$id, { message: message });
+
+      setIsLoading(false);
+
+      toast.success("Message edited successfully", { theme: "colored" });
+      onClose();
+    } catch (error) {
+      const err = error as AppwriteException;
+      setIsLoading(false);
+      toast.error(err.message, { theme: "colored" });
+    }
   };
 
   return (
@@ -86,7 +87,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
                 </Button>
                 <Button
                   color="danger"
-                  onPress={handleEditChat}
+                  onPress={handleEditChatMessage}
                   disabled={isLoading}
                 >
                   {isLoading ? <Spinner color="secondary" /> : "Edit"}
