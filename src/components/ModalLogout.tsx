@@ -21,7 +21,29 @@ const ModalLogout = ({ isMobile }: { isMobile?: boolean }) => {
   const navigate = useNavigate();
   const session = userStore((state) => state.userSession) as Models.Session;
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    setIsLoading(true);
+
+    try {
+      const res = await account.deleteSession(session?.$id);
+
+      if (!res) {
+        setIsLoading(false);
+        toast.error("Logout failed", { theme: "colored" });
+        return;
+      }
+
+      setIsLoading(false);
+      navigate("/sign-in");
+      toast.success("Logout successful", { theme: "colored" });
+    } catch (error) {
+      const err = error as AppwriteException;
+      setIsLoading(false);
+      toast.error(err.message, { theme: "colored" });
+    }
+  };
+
+  /*const handleLogout = () => {
     setIsLoading(true);
 
     account
@@ -35,7 +57,7 @@ const ModalLogout = ({ isMobile }: { isMobile?: boolean }) => {
         setIsLoading(false);
         toast.error(error.message, { theme: "colored" });
       });
-  };
+  };*/
 
   return (
     <>
