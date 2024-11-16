@@ -31,4 +31,27 @@
   .custom-scrollbar::-webkit-scrollbar-corner {
     background: #f5d0fe;
   }
+
+  .custom-scrollbar_dark::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  .custom-scrollbar_dark::-webkit-scrollbar-track {
+    background: #44403c;
+  }
+
+  .custom-scrollbar_dark::-webkit-scrollbar-thumb {
+    background: #525252;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar_dark::-webkit-scrollbar-thumb:hover {
+    background: #737373;
+  }
+
+  .custom-scrollbar_dark::-webkit-scrollbar-corner {
+    background: #44403c;
+  }
 }
