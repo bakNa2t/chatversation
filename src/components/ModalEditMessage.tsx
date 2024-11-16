@@ -49,6 +49,12 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleEditChatMessage();
+    }
+  };
+
   return (
     <>
       <Button
@@ -79,6 +85,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
                   value={message}
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
                 />
               </ModalBody>
               <ModalFooter>
