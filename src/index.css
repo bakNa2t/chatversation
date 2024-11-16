@@ -7,3 +7,28 @@
     @apply text-slate-800 dark:text-fuchsia-400;
   }
 }
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f5d0fe;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #f9a8d4;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #fb7185;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-corner {
+    background: #f5d0fe;
+  }
+}
