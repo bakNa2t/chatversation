@@ -26,6 +26,12 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
   const handleEditChatMessage = async () => {
     setIsLoading(true);
 
+    if (message.length === 0 && chat.message === message) {
+      toast.error("Message was not edited", { theme: "colored" });
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const res = await databases.updateDocument(
         appwriteConfig.databaseId,
@@ -50,8 +56,10 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && message !== "" && message !== chat.message) {
       handleEditChatMessage();
+    } else {
+      toast.error("Message was not edited", { theme: "colored" });
     }
   };
 
@@ -85,7 +93,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
                   value={message}
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                 />
               </ModalBody>
               <ModalFooter>
