@@ -29,6 +29,19 @@ const ModalUpdateCommunity = ({
 
   const handleUpdateChat = () => {
     setIsLoading(true);
+
+    if (community.name === name && community.desc === desc) {
+      setIsLoading(false);
+      toast.error("Chat group was not updated", { theme: "colored" });
+      return;
+    }
+
+    if (name.length === 0) {
+      setIsLoading(false);
+      toast.error("Name community was not be empty", { theme: "colored" });
+      return;
+    }
+
     databases
       .updateDocument(
         appwriteConfig.databaseId,
