@@ -15,6 +15,7 @@ import {
 
 import { appwriteConfig, databases } from "../lib/appwrite/config";
 import { communityStore } from "../lib/zustand/communityStore";
+import { useKeyPress } from "../hooks/useKeyPress";
 
 const ModalUpdateCommunity = ({
   community,
@@ -25,9 +26,11 @@ const ModalUpdateCommunity = ({
   const [name, setName] = useState<string>(community.name);
   const [desc, setDesc] = useState<string>(community.desc);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { keyDown } = useKeyPress("Enter", handleUpdateChat);
+
   const communityState = communityStore();
 
-  const handleUpdateChat = () => {
+  async function handleUpdateChat() {
     setIsLoading(true);
 
     if (community.name === name && community.desc === desc) {
@@ -62,7 +65,7 @@ const ModalUpdateCommunity = ({
         setIsLoading(false);
         toast.error(error.message, { theme: "colored" });
       });
-  };
+  }
 
   return (
     <>
@@ -88,6 +91,7 @@ const ModalUpdateCommunity = ({
                   value={name}
                   type="text"
                   onChange={(e) => setName(e.target.value)}
+                  onKeyDown={keyDown}
                 />
                 <Input
                   label="Description"
