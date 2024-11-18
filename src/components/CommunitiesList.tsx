@@ -6,9 +6,9 @@ import { toast } from "react-toastify";
 
 import { Button, Card, CardBody, Spinner } from "@nextui-org/react";
 import ModalDeleteElement from "./ModalDeleteElement";
+import ModalUpdateCommunity from "./ModalUpdateCommunity";
 
 import { communityStore } from "../lib/zustand/communityStore";
-import ModalUpdateCommunity from "./ModalUpdateCommunity";
 
 const CommunitiesList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,31 +17,31 @@ const CommunitiesList = () => {
   const communityState = communityStore();
 
   useEffect(() => {
-    const fetchCommunities = async () => {
-      if (!isFetched.current) {
-        setIsLoading(true);
+    if (!isFetched.current) {
+      setIsLoading(true);
 
-        try {
-          const res = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.communitiesCollectionId,
-            [Query.select(["$id", "name", "desc"])]
-          );
-
+      databases
+        .listDocuments(
+          appwriteConfig.databaseId,
+          appwriteConfig.communitiesCollectionId,
+          [Query.select(["$id", "name", "desc"])]
+        )
+        .then((res) => {
+          toast.success("Communities loaded successfully", {
+            theme: "colored",
+            autoClose: 2000,
+          });
+          setIsLoading(false);
           communityState.addCommunities(res.documents);
+        })
+        .catch((error: AppwriteException) => {
+          toast.error(error.message, { theme: "colored" });
           setIsLoading(false);
-        } catch (error) {
-          const err = error as AppwriteException;
-          setIsLoading(false);
-          toast.error(err.message, { theme: "colored" });
-        }
+        });
 
-        isFetched.current = true;
-      }
-    };
-
-    fetchCommunities();
-  }, [isFetched]);
+      isFetched.current = true;
+    }
+  }, []);
 
   const handleDeleteCommunity = async (id: string) => {
     try {
