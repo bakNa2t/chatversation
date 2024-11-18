@@ -15,6 +15,7 @@ import {
 
 import { appwriteConfig, databases } from "../lib/appwrite/config";
 import { chatStore } from "../lib/zustand/chatStore";
+import { useKeyPress } from "../hooks/useKeyPress";
 
 const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,7 +27,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
   const handleEditChatMessage = async () => {
     setIsLoading(true);
 
-    if (message.length === 0 && chat.message === message) {
+    if (message.length === 0 || chat.message === message) {
       toast.error("Message was not edited", { theme: "colored" });
       setIsLoading(false);
       return;
@@ -55,13 +56,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && message !== "" && message !== chat.message) {
-      handleEditChatMessage();
-    } else {
-      toast.error("Message was not edited", { theme: "colored" });
-    }
-  };
+  const { keyDown } = useKeyPress("Enter", handleEditChatMessage);
 
   return (
     <>
@@ -93,7 +88,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
                   value={message}
                   type="text"
                   onChange={(e) => setMessage(e.target.value)}
-                  onKeyDown={handleKeyPress}
+                  onKeyDown={keyDown}
                 />
               </ModalBody>
               <ModalFooter>
