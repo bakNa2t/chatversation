@@ -22,9 +22,11 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
   const [message, setMessage] = useState<string>(chat.message);
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
+  const { keyDown } = useKeyPress("Enter", handleEditChatMessage);
+
   const chatState = chatStore();
 
-  const handleEditChatMessage = async () => {
+  async function handleEditChatMessage() {
     setIsLoading(true);
 
     if (message.length === 0 || chat.message === message) {
@@ -54,9 +56,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
       setIsLoading(false);
       toast.error(err.message, { theme: "colored" });
     }
-  };
-
-  const { keyDown } = useKeyPress("Enter", handleEditChatMessage);
+  }
 
   return (
     <>
