@@ -57,7 +57,7 @@ const SigninForm = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="max-w-[23rem] sm:max-w-[32rem] p-4 rounded-md shadow-xl shadow-rose-400 bg-fuchsia-200">
+      <div className="max-w-[23rem] sm:max-w-[32rem] p-4 rounded-md shadow-xl shadow-rose-400 bg-fuchsia-200 dark:bg-stone-700">
         <div className="flex items-center justify-center gap-3">
           <img
             src="/assets/images/chat-logo.png"
@@ -72,7 +72,7 @@ const SigninForm = () => {
         <h1 className="w-full text-center text-xl sm:text-2xl font-bold pt-2 sm:pt-5">
           Log in to your account
         </h1>
-        <p className="w-full text-center text-fuchsia-700 mt-2">
+        <p className="w-full text-center text-fuchsia-700 dark:text-fuchsia-500 mt-2">
           Welcome back to Chatversation! Please enter your details
         </p>
 
@@ -114,13 +114,13 @@ const SigninForm = () => {
                   >
                     {isVisible ? (
                       <img
-                        src="/assets/icons/eye-on.svg"
+                        src="/assets/icons/eye-off.svg"
                         alt="eye"
                         className="opacity-50"
                       />
                     ) : (
                       <img
-                        src="/assets/icons/eye-off.svg"
+                        src="/assets/icons/eye-on.svg"
                         alt="eye"
                         className="opacity-50"
                       />
@@ -139,7 +139,7 @@ const SigninForm = () => {
             </Button>
           </div>
         </form>
-        <p className="text-center text-fuchsia-700 mt-2">
+        <p className="text-center text-fuchsia-700 dark:text-fuchsia-500 mt-2">
           Don't have an account?
           <Link to="/sign-up" className="ml-1 font-semibold">
             Sign up
