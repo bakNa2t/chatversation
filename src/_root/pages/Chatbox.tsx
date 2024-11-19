@@ -138,6 +138,16 @@ const Chatbox = () => {
     }
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+
+    const chatbox = document.getElementById("chatbox");
+    const lastMessage = chatbox?.lastElementChild;
+    lastMessage?.scrollIntoView({ behavior: "smooth" });
+
+    setIsLoading(false);
+  }, [chatState.chats]);
+
   if (isLoading)
     return (
       <div className="min-h-[34rem] flex justify-center">
@@ -147,7 +157,7 @@ const Chatbox = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1 p-4 mb-20">
+      <div id="chatbox" className="flex-1 p-4 mb-20">
         {chatState.chats.length > 0 ? (
           chatState.chats.map((chat) =>
             chat.user_id === user.$id ? (
