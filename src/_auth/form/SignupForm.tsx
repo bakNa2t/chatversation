@@ -58,7 +58,7 @@ const SignupForm = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="sm:w-[32rem] p-4 rounded-md shadow-xl shadow-rose-400 bg-fuchsia-200">
+      <div className="sm:w-[32rem] p-4 rounded-md shadow-xl shadow-rose-400 bg-fuchsia-200  dark:bg-stone-700">
         <div className="flex items-center justify-center gap-3">
           <img
             src="/assets/images/chat-logo.png"
@@ -73,7 +73,7 @@ const SignupForm = () => {
         <h1 className="w-full text-center text-xl sm:text-2xl font-bold pt-2 sm:pt-5">
           Create a new account
         </h1>
-        <p className="w-full text-center text-fuchsia-700 mt-2">
+        <p className="w-full text-center text-fuchsia-700 dark:text-fuchsia-500 mt-2">
           Hello there! Get started with us to Chatversation
         </p>
 
