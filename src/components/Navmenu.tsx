@@ -68,16 +68,16 @@ const Navmenu = () => {
           className="sm:hidden"
         />
         <NavbarBrand className="gap-2">
-          <Link to="/">
+          <Link to="/" className="flex items-center gap-2">
             <img
               src="/assets/images/chat-logo.png"
               alt="Logo"
               className="w-12 h-12 sm:w-14 sm:h-14 rounded-full"
             />
+            {isMobile ? null : (
+              <p className="font-bold text-xl sm:text-2xl">Chatversation</p>
+            )}
           </Link>
-          {isMobile ? null : (
-            <p className="font-bold text-xl sm:text-2xl">Chatversation</p>
-          )}
         </NavbarBrand>
       </NavbarContent>
 
