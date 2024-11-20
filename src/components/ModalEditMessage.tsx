@@ -74,7 +74,7 @@ const ModalEditMessage = ({ chat }: { chat: Models.Document }) => {
         onOpenChange={onOpenChange}
         placement="center"
         backdrop="blur"
-        className="max-w-[25rem] sm:max-w-md"
+        className="max-w-[20rem] xs:max-w-[22rem] sm:max-w-md"
       >
         <ModalContent className="bg-fuchsia-300 dark:bg-stone-700 shadow-xl shadow-rose-300 dark:shadow-xl dark:shadow-fuchsia-500">
           {(onClose) => (
